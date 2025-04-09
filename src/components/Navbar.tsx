@@ -58,7 +58,7 @@ const Navbar: React.FC = () => {
         {/* Logo */}
         <a href="#home" className="flex items-center">
           <img
-            src="/lovable-uploads/a82de35b-2205-43b8-a99a-917b1b558e84.png"
+            src="/lovable-uploads/af9707fa-fd5e-4590-984f-fcfc473caab4.png"
             alt="Algorito Logo"
             className="h-12 md:h-14"
           />

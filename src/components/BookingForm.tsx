@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+import { sendEmail } from '@/utils/emailService';
 
 const BookingForm: React.FC = () => {
   const { t, language } = useLanguage();
@@ -26,6 +27,7 @@ const BookingForm: React.FC = () => {
   const [time, setTime] = useState('');
   const [message, setMessage] = useState('');
   const [errors, setErrors] = useState<{[key: string]: string}>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Time slots
   const timeSlots = [
@@ -47,27 +49,64 @@ const BookingForm: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (validate()) {
-      // Here you would typically send the data to your server
-      console.log({ name, email, date, time, message });
+      setIsSubmitting(true);
       
-      // Show success message
-      toast({
-        title: t('bookingConfirmed'),
-        description: language === 'en' 
-          ? `We'll be in touch soon to confirm your appointment.` 
-          : `Nos pondremos en contacto pronto para confirmar tu cita.`,
-      });
-      
-      // Reset form
-      setName('');
-      setEmail('');
-      setDate(undefined);
-      setTime('');
-      setMessage('');
+      try {
+        // Send the booking data to the email service
+        const subject = language === 'en' 
+          ? `Booking Request from ${name} for ${date ? format(date, 'PPP') : ''} at ${time}`
+          : `Solicitud de Reserva de ${name} para ${date ? format(date, 'PPP') : ''} a las ${time}`;
+          
+        const success = await sendEmail({
+          name,
+          email,
+          date,
+          time,
+          message,
+          subject
+        });
+        
+        if (success) {
+          // Show success message
+          toast({
+            title: t('bookingConfirmed'),
+            description: language === 'en' 
+              ? `Your booking request has been sent to algoritoai@gmail.com. We'll be in touch soon to confirm your appointment.` 
+              : `Tu solicitud de reserva ha sido enviada a algoritoai@gmail.com. Nos pondremos en contacto pronto para confirmar tu cita.`,
+          });
+          
+          // Reset form
+          setName('');
+          setEmail('');
+          setDate(undefined);
+          setTime('');
+          setMessage('');
+        } else {
+          // Show error message
+          toast({
+            title: t('error'),
+            description: language === 'en' 
+              ? 'There was a problem sending your booking request. Please try again later.' 
+              : 'Hubo un problema al enviar tu solicitud de reserva. Por favor, inténtalo de nuevo más tarde.',
+            variant: 'destructive'
+          });
+        }
+      } catch (error) {
+        console.error('Error sending booking email:', error);
+        toast({
+          title: t('error'),
+          description: language === 'en' 
+            ? 'An unexpected error occurred. Please try again later.' 
+            : 'Ocurrió un error inesperado. Por favor, inténtalo de nuevo más tarde.',
+          variant: 'destructive'
+        });
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -136,6 +175,7 @@ const BookingForm: React.FC = () => {
                     onChange={(e) => setName(e.target.value)}
                     placeholder={language === 'en' ? 'Enter your name' : 'Introduce tu nombre'}
                     className={errors.name ? 'border-red-300' : ''}
+                    disabled={isSubmitting}
                   />
                   {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
                 </div>
@@ -153,6 +193,7 @@ const BookingForm: React.FC = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={language === 'en' ? 'Enter your email' : 'Introduce tu email'}
                     className={errors.email ? 'border-red-300' : ''}
+                    disabled={isSubmitting}
                   />
                   {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
                 </div>
@@ -171,6 +212,7 @@ const BookingForm: React.FC = () => {
                           className={`w-full flex items-center justify-between border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-algorito-500 ${
                             errors.date ? 'border-red-300' : theme === 'dark' ? 'border-gray-700' : 'border-gray-300'
                           } ${!date ? 'text-gray-400' : theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}
+                          disabled={isSubmitting}
                         >
                           {date ? (
                             format(date, 'PPP', { locale: language === 'es' ? es : undefined })
@@ -206,6 +248,7 @@ const BookingForm: React.FC = () => {
                           className={`w-full flex items-center justify-between border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-algorito-500 ${
                             errors.time ? 'border-red-300' : theme === 'dark' ? 'border-gray-700' : 'border-gray-300'
                           } ${!time ? 'text-gray-400' : theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}
+                          disabled={isSubmitting}
                         >
                           {time || (language === 'en' ? 'Select time' : 'Seleccionar hora')}
                           <Clock className="ml-2 h-4 w-4 opacity-50" />
@@ -251,11 +294,18 @@ const BookingForm: React.FC = () => {
                     placeholder={language === 'en' ? 'Tell us about your automation needs' : 'Cuéntanos sobre tus necesidades de automatización'}
                     rows={3}
                     className={theme === 'dark' ? 'bg-gray-800 border-gray-700 text-gray-300' : ''}
+                    disabled={isSubmitting}
                   />
                 </div>
                 
-                <button type="submit" className="w-full btn-primary py-3">
-                  {t('bookNow')}
+                <button 
+                  type="submit" 
+                  className={`w-full btn-primary py-3 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting 
+                    ? (language === 'en' ? 'Sending...' : 'Enviando...') 
+                    : t('bookNow')}
                 </button>
               </form>
             </div>
