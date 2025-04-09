@@ -62,4 +62,3 @@ export const sendEmail = async (data: EmailData): Promise<boolean> => {
 // 1. Connect this project to Supabase using the green Supabase button in the top-right
 // 2. Create an Edge Function in Supabase to handle email sending using a service like SendGrid/Mailgun
 // 3. Call that Edge Function from this file instead of the simulation
-
