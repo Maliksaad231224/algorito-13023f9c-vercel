@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
   // Social media links (removed Twitter, Facebook, and Github)
   const socialLinks = [
     { icon: <Linkedin className="h-5 w-5" />, href: '#', label: 'LinkedIn' },
-    { icon: <Instagram className="h-5 w-5" />, href: '#', label: 'Instagram' },
+    { icon: <Instagram className="h-5 w-5" />, href: 'https://www.instagram.com/algoritoai/', label: 'Instagram' },
   ];
 
   // Navigation links
@@ -59,6 +59,8 @@ const Footer: React.FC = () => {
                   href={link.href}
                   className="bg-gray-800 p-2 rounded-full hover:bg-algorito-600 transition-colors duration-300"
                   aria-label={link.label}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   {link.icon}
                 </a>
