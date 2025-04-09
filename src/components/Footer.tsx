@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Facebook, Twitter, Linkedin, Instagram, GitHub } from 'lucide-react';
+import { Facebook, Twitter, Linkedin, Instagram, Github } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const { t } = useLanguage();
@@ -14,7 +13,7 @@ const Footer: React.FC = () => {
     { icon: <Linkedin className="h-5 w-5" />, href: '#', label: 'LinkedIn' },
     { icon: <Facebook className="h-5 w-5" />, href: '#', label: 'Facebook' },
     { icon: <Instagram className="h-5 w-5" />, href: '#', label: 'Instagram' },
-    { icon: <GitHub className="h-5 w-5" />, href: '#', label: 'GitHub' },
+    { icon: <Github className="h-5 w-5" />, href: '#', label: 'GitHub' },
   ];
 
   // Navigation links
