@@ -1,0 +1,250 @@
+
+import React, { useState } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useToast } from '@/hooks/use-toast';
+import { CalendarIcon, Clock } from 'lucide-react';
+import { Calendar } from '@/components/ui/calendar';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { format } from 'date-fns';
+import { es } from 'date-fns/locale';
+
+const BookingForm: React.FC = () => {
+  const { t, language } = useLanguage();
+  const { toast } = useToast();
+  
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [date, setDate] = useState<Date | undefined>(undefined);
+  const [time, setTime] = useState('');
+  const [message, setMessage] = useState('');
+  const [errors, setErrors] = useState<{[key: string]: string}>({});
+
+  // Time slots
+  const timeSlots = [
+    '09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
+    '12:00', '12:30', '13:00', '13:30', '14:00', '14:30',
+    '15:00', '15:30', '16:00', '16:30', '17:00', '17:30'
+  ];
+
+  const validate = () => {
+    const newErrors: {[key: string]: string} = {};
+    
+    if (!name.trim()) newErrors.name = t('required');
+    if (!email.trim()) newErrors.email = t('required');
+    else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = t('invalidEmail');
+    if (!date) newErrors.date = t('required');
+    if (!time) newErrors.time = t('required');
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (validate()) {
+      // Here you would typically send the data to your server
+      console.log({ name, email, date, time, message });
+      
+      // Show success message
+      toast({
+        title: t('bookingConfirmed'),
+        description: language === 'en' 
+          ? `We'll be in touch soon to confirm your appointment.` 
+          : `Nos pondremos en contacto pronto para confirmar tu cita.`,
+      });
+      
+      // Reset form
+      setName('');
+      setEmail('');
+      setDate(undefined);
+      setTime('');
+      setMessage('');
+    }
+  };
+
+  return (
+    <section id="booking" className="py-20 bg-algorito-50">
+      <div className="container mx-auto px-4">
+        <h2 className="section-title">{t('bookingTitle')}</h2>
+        <p className="text-center text-gray-600 max-w-2xl mx-auto mb-10">
+          {t('bookingSubtitle')}
+        </p>
+        
+        <div className="bg-white rounded-2xl shadow-xl max-w-3xl mx-auto overflow-hidden">
+          <div className="grid md:grid-cols-5">
+            {/* Left side - decoration */}
+            <div className="hidden md:block md:col-span-2 bg-gradient-to-br from-algorito-600 to-algorito-800 text-white p-10">
+              <div className="h-full flex flex-col justify-between">
+                <div>
+                  <h3 className="text-2xl font-bold mb-4">
+                    {language === 'en' ? 'Let\'s Chat About Your Needs' : 'Hablemos Sobre Tus Necesidades'}
+                  </h3>
+                  <p className="mb-6">
+                    {language === 'en' 
+                      ? 'Schedule a free 30-minute consultation with our automation experts.' 
+                      : 'Agenda una consulta gratuita de 30 minutos con nuestros expertos en automatización.'}
+                  </p>
+                </div>
+                
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <CalendarIcon className="w-6 h-6 text-algorito-200 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold">
+                        {language === 'en' ? 'Monday - Friday' : 'Lunes - Viernes'}
+                      </h4>
+                      <p className="text-sm text-algorito-100">9:00 - 18:00 CET</p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <Clock className="w-6 h-6 text-algorito-200 flex-shrink-0" />
+                    <div>
+                      <h4 className="font-semibold">
+                        {language === 'en' ? '30-Minute Session' : 'Sesión de 30 Minutos'}
+                      </h4>
+                      <p className="text-sm text-algorito-100">
+                        {language === 'en' ? 'No obligation, completely free' : 'Sin obligación, completamente gratis'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Right side - form */}
+            <div className="p-6 md:p-10 md:col-span-3">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                    {t('yourName')} *
+                  </label>
+                  <Input
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder={language === 'en' ? 'Enter your name' : 'Introduce tu nombre'}
+                    className={errors.name ? 'border-red-300' : ''}
+                  />
+                  {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
+                </div>
+                
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                    {t('yourEmail')} *
+                  </label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder={language === 'en' ? 'Enter your email' : 'Introduce tu email'}
+                    className={errors.email ? 'border-red-300' : ''}
+                  />
+                  {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      {t('preferredDate')} *
+                    </label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <button
+                          type="button"
+                          className={`w-full flex items-center justify-between border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-algorito-500 ${
+                            errors.date ? 'border-red-300' : 'border-gray-300'
+                          } ${!date ? 'text-gray-400' : 'text-gray-700'}`}
+                        >
+                          {date ? (
+                            format(date, 'PPP', { locale: language === 'es' ? es : undefined })
+                          ) : (
+                            <span>{language === 'en' ? 'Select date' : 'Seleccionar fecha'}</span>
+                          )}
+                          <CalendarIcon className="ml-2 h-4 w-4 opacity-50" />
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={date}
+                          onSelect={setDate}
+                          disabled={(date) => date < new Date() || date.getDay() === 0 || date.getDay() === 6}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                    {errors.date && <p className="mt-1 text-sm text-red-500">{errors.date}</p>}
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      {t('preferredTime')} *
+                    </label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <button
+                          type="button"
+                          className={`w-full flex items-center justify-between border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-algorito-500 ${
+                            errors.time ? 'border-red-300' : 'border-gray-300'
+                          } ${!time ? 'text-gray-400' : 'text-gray-700'}`}
+                        >
+                          {time || (language === 'en' ? 'Select time' : 'Seleccionar hora')}
+                          <Clock className="ml-2 h-4 w-4 opacity-50" />
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-48 p-0" align="start">
+                        <div className="max-h-[200px] overflow-auto p-2">
+                          {timeSlots.map((slot) => (
+                            <button
+                              key={slot}
+                              type="button"
+                              onClick={() => setTime(slot)}
+                              className={`w-full text-left px-2 py-1 rounded-md my-1 hover:bg-algorito-50 ${
+                                time === slot ? 'bg-algorito-100 text-algorito-800' : ''
+                              }`}
+                            >
+                              {slot}
+                            </button>
+                          ))}
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                    {errors.time && <p className="mt-1 text-sm text-red-500">{errors.time}</p>}
+                  </div>
+                </div>
+                
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                    {t('message')}
+                  </label>
+                  <Textarea
+                    id="message"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder={language === 'en' ? 'Tell us about your automation needs' : 'Cuéntanos sobre tus necesidades de automatización'}
+                    rows={3}
+                  />
+                </div>
+                
+                <button type="submit" className="w-full btn-primary py-3">
+                  {t('bookNow')}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default BookingForm;
