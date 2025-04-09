@@ -1,10 +1,12 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useTheme } from '@/contexts/ThemeContext';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 
 const Testimonials: React.FC = () => {
   const { t, language } = useLanguage();
+  const { theme } = useTheme();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Testimonials data with English and Spanish versions
@@ -66,15 +68,19 @@ const Testimonials: React.FC = () => {
   };
 
   return (
-    <section id="reviews" className="py-20 bg-gradient-to-b from-white to-gray-50">
+    <section id="reviews" className={`py-20 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gradient-to-b from-white to-gray-50'}`}>
       <div className="container mx-auto px-4">
-        <h2 className="section-title">{t('reviewsTitle')}</h2>
+        <h2 className={`section-title ${theme === 'dark' ? 'text-white' : ''}`}>{t('reviewsTitle')}</h2>
         
         <div className="relative mt-12 max-w-4xl mx-auto">
           {/* Navigation Buttons */}
           <button 
             onClick={prevTestimonial}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 bg-white p-2 rounded-full shadow-md hover:bg-algorito-50 z-10"
+            className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 ${
+              theme === 'dark' ? 'bg-gray-800' : 'bg-white'
+            } p-2 rounded-full shadow-md ${
+              theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-algorito-50'
+            } z-10`}
             aria-label="Previous testimonial"
           >
             <ChevronLeft className="w-6 h-6 text-algorito-600" />
@@ -82,18 +88,24 @@ const Testimonials: React.FC = () => {
           
           <button 
             onClick={nextTestimonial}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 bg-white p-2 rounded-full shadow-md hover:bg-algorito-50 z-10"
+            className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 ${
+              theme === 'dark' ? 'bg-gray-800' : 'bg-white'
+            } p-2 rounded-full shadow-md ${
+              theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-algorito-50'
+            } z-10`}
             aria-label="Next testimonial"
           >
             <ChevronRight className="w-6 h-6 text-algorito-600" />
           </button>
           
           {/* Testimonial Card */}
-          <div className="glass-card p-8 md:p-10">
+          <div className={`${
+            theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'glass-card'
+          } p-8 md:p-10`}>
             <div className="flex flex-col md:flex-row items-center">
               <div className="md:w-1/4 mb-6 md:mb-0 flex justify-center">
                 <img 
-                  src={testimonials[currentIndex].image} 
+                  src="/lovable-uploads/d0673b16-a8cd-4885-bb22-8c4efb3559ff.png" 
                   alt={testimonials[currentIndex].name} 
                   className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
                 />
@@ -102,12 +114,18 @@ const Testimonials: React.FC = () => {
                 <div className="flex mb-2">
                   {renderStars(testimonials[currentIndex].rating)}
                 </div>
-                <blockquote className="text-lg italic mb-4">
+                <blockquote className={`text-lg italic mb-4 ${
+                  theme === 'dark' ? 'text-gray-300' : ''
+                }`}>
                   "{testimonials[currentIndex].text[language as 'en' | 'es']}"
                 </blockquote>
                 <div className="text-right">
-                  <p className="font-bold text-lg">{testimonials[currentIndex].name}</p>
-                  <p className="text-gray-600">{testimonials[currentIndex].company}</p>
+                  <p className={`font-bold text-lg ${
+                    theme === 'dark' ? 'text-white' : ''
+                  }`}>{testimonials[currentIndex].name}</p>
+                  <p className={`${
+                    theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+                  }`}>{testimonials[currentIndex].company}</p>
                 </div>
               </div>
             </div>
@@ -120,7 +138,7 @@ const Testimonials: React.FC = () => {
                 key={index}
                 onClick={() => setCurrentIndex(index)}
                 className={`w-3 h-3 rounded-full ${
-                  currentIndex === index ? 'bg-algorito-600' : 'bg-gray-300'
+                  currentIndex === index ? 'bg-algorito-600' : theme === 'dark' ? 'bg-gray-600' : 'bg-gray-300'
                 }`}
                 aria-label={`Go to testimonial ${index + 1}`}
               />
@@ -130,12 +148,16 @@ const Testimonials: React.FC = () => {
         
         {/* Client Logos (Placeholder) */}
         <div className="mt-16">
-          <p className="text-center text-gray-500 mb-6">
+          <p className={`text-center ${
+            theme === 'dark' ? 'text-gray-400' : 'text-gray-500'
+          } mb-6`}>
             {language === 'en' ? 'Trusted by companies worldwide' : 'Empresas que confían en nosotros'}
           </p>
           <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
             {Array(5).fill(0).map((_, i) => (
-              <div key={i} className="h-12 bg-gray-300 w-32 rounded"></div>
+              <div key={i} className={`h-12 ${
+                theme === 'dark' ? 'bg-gray-700' : 'bg-gray-300'
+              } w-32 rounded`}></div>
             ))}
           </div>
         </div>

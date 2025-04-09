@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useTheme } from '@/contexts/ThemeContext';
 import { useToast } from '@/hooks/use-toast';
 import { CalendarIcon, Clock } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
@@ -16,6 +17,7 @@ import { es } from 'date-fns/locale';
 
 const BookingForm: React.FC = () => {
   const { t, language } = useLanguage();
+  const { theme } = useTheme();
   const { toast } = useToast();
   
   const [name, setName] = useState('');
@@ -70,14 +72,14 @@ const BookingForm: React.FC = () => {
   };
 
   return (
-    <section id="booking" className="py-20 bg-algorito-50">
+    <section id="booking" className={`py-20 ${theme === 'dark' ? 'bg-gray-800' : 'bg-algorito-50'}`}>
       <div className="container mx-auto px-4">
-        <h2 className="section-title">{t('bookingTitle')}</h2>
-        <p className="text-center text-gray-600 max-w-2xl mx-auto mb-10">
+        <h2 className={`section-title ${theme === 'dark' ? 'text-white' : ''}`}>{t('bookingTitle')}</h2>
+        <p className={`text-center ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto mb-10`}>
           {t('bookingSubtitle')}
         </p>
         
-        <div className="bg-white rounded-2xl shadow-xl max-w-3xl mx-auto overflow-hidden">
+        <div className={`${theme === 'dark' ? 'bg-gray-900' : 'bg-white'} rounded-2xl shadow-xl max-w-3xl mx-auto overflow-hidden`}>
           <div className="grid md:grid-cols-5">
             {/* Left side - decoration */}
             <div className="hidden md:block md:col-span-2 bg-gradient-to-br from-algorito-600 to-algorito-800 text-white p-10">
@@ -123,7 +125,9 @@ const BookingForm: React.FC = () => {
             <div className="p-6 md:p-10 md:col-span-3">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="name" className={`block text-sm font-medium ${
+                    theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                  } mb-1`}>
                     {t('yourName')} *
                   </label>
                   <Input
@@ -137,7 +141,9 @@ const BookingForm: React.FC = () => {
                 </div>
                 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="email" className={`block text-sm font-medium ${
+                    theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                  } mb-1`}>
                     {t('yourEmail')} *
                   </label>
                   <Input
@@ -153,7 +159,9 @@ const BookingForm: React.FC = () => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className={`block text-sm font-medium ${
+                      theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                    } mb-1`}>
                       {t('preferredDate')} *
                     </label>
                     <Popover>
@@ -161,8 +169,8 @@ const BookingForm: React.FC = () => {
                         <button
                           type="button"
                           className={`w-full flex items-center justify-between border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-algorito-500 ${
-                            errors.date ? 'border-red-300' : 'border-gray-300'
-                          } ${!date ? 'text-gray-400' : 'text-gray-700'}`}
+                            errors.date ? 'border-red-300' : theme === 'dark' ? 'border-gray-700' : 'border-gray-300'
+                          } ${!date ? 'text-gray-400' : theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}
                         >
                           {date ? (
                             format(date, 'PPP', { locale: language === 'es' ? es : undefined })
@@ -186,7 +194,9 @@ const BookingForm: React.FC = () => {
                   </div>
                   
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className={`block text-sm font-medium ${
+                      theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                    } mb-1`}>
                       {t('preferredTime')} *
                     </label>
                     <Popover>
@@ -194,22 +204,28 @@ const BookingForm: React.FC = () => {
                         <button
                           type="button"
                           className={`w-full flex items-center justify-between border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-algorito-500 ${
-                            errors.time ? 'border-red-300' : 'border-gray-300'
-                          } ${!time ? 'text-gray-400' : 'text-gray-700'}`}
+                            errors.time ? 'border-red-300' : theme === 'dark' ? 'border-gray-700' : 'border-gray-300'
+                          } ${!time ? 'text-gray-400' : theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}
                         >
                           {time || (language === 'en' ? 'Select time' : 'Seleccionar hora')}
                           <Clock className="ml-2 h-4 w-4 opacity-50" />
                         </button>
                       </PopoverTrigger>
-                      <PopoverContent className="w-48 p-0" align="start">
+                      <PopoverContent className={`w-48 p-0 ${theme === 'dark' ? 'bg-gray-800' : ''}`} align="start">
                         <div className="max-h-[200px] overflow-auto p-2">
                           {timeSlots.map((slot) => (
                             <button
                               key={slot}
                               type="button"
                               onClick={() => setTime(slot)}
-                              className={`w-full text-left px-2 py-1 rounded-md my-1 hover:bg-algorito-50 ${
-                                time === slot ? 'bg-algorito-100 text-algorito-800' : ''
+                              className={`w-full text-left px-2 py-1 rounded-md my-1 ${
+                                theme === 'dark' 
+                                  ? time === slot 
+                                    ? 'bg-algorito-600 text-white' 
+                                    : 'hover:bg-gray-700 text-gray-300'
+                                  : time === slot 
+                                    ? 'bg-algorito-100 text-algorito-800' 
+                                    : 'hover:bg-algorito-50'
                               }`}
                             >
                               {slot}
@@ -223,7 +239,9 @@ const BookingForm: React.FC = () => {
                 </div>
                 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="message" className={`block text-sm font-medium ${
+                    theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                  } mb-1`}>
                     {t('message')}
                   </label>
                   <Textarea
@@ -232,6 +250,7 @@ const BookingForm: React.FC = () => {
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder={language === 'en' ? 'Tell us about your automation needs' : 'Cuéntanos sobre tus necesidades de automatización'}
                     rows={3}
+                    className={theme === 'dark' ? 'bg-gray-800 border-gray-700 text-gray-300' : ''}
                   />
                 </div>
                 

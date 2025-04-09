@@ -41,7 +41,7 @@ const Footer: React.FC = () => {
           {/* Company Info */}
           <div>
             <img
-              src="/lovable-uploads/49ccf7a5-024d-47f9-879d-bf893774dc62.png"
+              src="/lovable-uploads/d0673b16-a8cd-4885-bb22-8c4efb3559ff.png"
               alt="Algorito Logo"
               className="h-14 mb-4"
             />

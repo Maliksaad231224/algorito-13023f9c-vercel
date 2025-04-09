@@ -40,7 +40,7 @@ const Hero: React.FC = () => {
         </div>
         <div className="md:w-1/2 flex justify-center">
           <img
-            src="/lovable-uploads/c4e082dd-3b87-4e72-a439-33642d76afc2.png"
+            src="/lovable-uploads/d0673b16-a8cd-4885-bb22-8c4efb3559ff.png"
             alt="Algorito Mascot"
             className="w-full max-w-md animate-fade-in"
           />
