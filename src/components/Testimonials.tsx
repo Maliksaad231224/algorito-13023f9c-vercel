@@ -105,7 +105,7 @@ const Testimonials: React.FC = () => {
             <div className="flex flex-col md:flex-row items-center">
               <div className="md:w-1/4 mb-6 md:mb-0 flex justify-center">
                 <img 
-                  src="/lovable-uploads/d0673b16-a8cd-4885-bb22-8c4efb3559ff.png" 
+                  src="/lovable-uploads/a82de35b-2205-43b8-a99a-917b1b558e84.png" 
                   alt={testimonials[currentIndex].name} 
                   className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
                 />
