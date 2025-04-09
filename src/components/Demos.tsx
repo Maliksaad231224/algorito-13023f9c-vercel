@@ -4,25 +4,25 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Play } from 'lucide-react';
 
 const Demos: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   // Demo videos data (placeholders)
   const demoVideos = [
     {
       id: 1,
-      title: t('language') === 'en' ? 'Workflow Automation Demo' : 'Demostración de Automatización de Flujo de Trabajo',
+      title: language === 'en' ? 'Workflow Automation Demo' : 'Demostración de Automatización de Flujo de Trabajo',
       thumbnail: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&q=80',
       duration: '2:35',
     },
     {
       id: 2,
-      title: t('language') === 'en' ? 'AI Website Builder Demo' : 'Demostración de Constructor de Sitios Web con IA',
+      title: language === 'en' ? 'AI Website Builder Demo' : 'Demostración de Constructor de Sitios Web con IA',
       thumbnail: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80',
       duration: '3:12',
     },
     {
       id: 3,
-      title: t('language') === 'en' ? 'Chatbot Integration Demo' : 'Demostración de Integración de Chatbot',
+      title: language === 'en' ? 'Chatbot Integration Demo' : 'Demostración de Integración de Chatbot',
       thumbnail: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80',
       duration: '1:47',
     },
