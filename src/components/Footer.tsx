@@ -1,19 +1,19 @@
+
 import React from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Facebook, Twitter, Linkedin, Instagram, Github } from 'lucide-react';
+import { Linkedin, Instagram } from 'lucide-react';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const Footer: React.FC = () => {
   const { t } = useLanguage();
+  const { theme } = useTheme();
   
   const currentYear = new Date().getFullYear();
   
-  // Social media links
+  // Social media links (removed Twitter, Facebook, and Github)
   const socialLinks = [
-    { icon: <Twitter className="h-5 w-5" />, href: '#', label: 'Twitter' },
     { icon: <Linkedin className="h-5 w-5" />, href: '#', label: 'LinkedIn' },
-    { icon: <Facebook className="h-5 w-5" />, href: '#', label: 'Facebook' },
     { icon: <Instagram className="h-5 w-5" />, href: '#', label: 'Instagram' },
-    { icon: <Github className="h-5 w-5" />, href: '#', label: 'GitHub' },
   ];
 
   // Navigation links
@@ -34,7 +34,7 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="bg-gray-900 text-white pt-16 pb-8">
+    <footer className={`${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-900'} text-white pt-16 pb-8`}>
       <div className="container mx-auto px-4">
         {/* Footer Top */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">

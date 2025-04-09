@@ -2,10 +2,12 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageToggle from '@/components/LanguageToggle';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Moon, Sun } from 'lucide-react';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const Navbar: React.FC = () => {
   const { t } = useLanguage();
+  const { theme, toggleTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -47,7 +49,9 @@ const Navbar: React.FC = () => {
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'
+        isScrolled 
+          ? (theme === 'dark' ? 'bg-gray-900 shadow-md py-2' : 'bg-white shadow-md py-2') 
+          : 'bg-transparent py-4'
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
@@ -64,6 +68,19 @@ const Navbar: React.FC = () => {
         <div className="hidden md:flex items-center space-x-1">
           <LanguageToggle />
           
+          {/* Theme Toggle Button */}
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-algorito-600 dark:hover:text-algorito-400 focus:outline-none transition-colors"
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? (
+              <Sun size={20} className="text-yellow-400" />
+            ) : (
+              <Moon size={20} />
+            )}
+          </button>
+          
           {navItems.map((item) => (
             <a
               key={item.href}
@@ -71,7 +88,7 @@ const Navbar: React.FC = () => {
               className={`px-3 py-2 rounded-md text-sm font-medium hover:text-algorito-600 transition-colors ${
                 item.name === t('bookCall')
                   ? 'bg-algorito-600 text-white hover:bg-algorito-700 hover:text-white ml-2'
-                  : 'text-gray-700'
+                  : theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
               }`}
             >
               {item.name}
@@ -82,9 +99,23 @@ const Navbar: React.FC = () => {
         {/* Mobile Menu Button */}
         <div className="flex items-center md:hidden">
           <LanguageToggle />
+          
+          {/* Theme Toggle Button for Mobile */}
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-algorito-600 dark:hover:text-algorito-400 focus:outline-none transition-colors"
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? (
+              <Sun size={20} className="text-yellow-400" />
+            ) : (
+              <Moon size={20} />
+            )}
+          </button>
+          
           <button
             onClick={toggleMenu}
-            className="p-2 ml-2 rounded-md text-gray-700 hover:text-algorito-600 focus:outline-none"
+            className="p-2 ml-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-algorito-600 focus:outline-none"
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -95,7 +126,7 @@ const Navbar: React.FC = () => {
       <div
         className={`md:hidden ${
           isMenuOpen ? 'block' : 'hidden'
-        } bg-white shadow-md`}
+        } ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'} shadow-md`}
       >
         <div className="px-2 pt-2 pb-3 space-y-1">
           {navItems.map((item) => (
@@ -105,7 +136,9 @@ const Navbar: React.FC = () => {
               className={`block px-3 py-2 rounded-md text-base font-medium ${
                 item.name === t('bookCall')
                   ? 'bg-algorito-600 text-white'
-                  : 'text-gray-700 hover:bg-algorito-50 hover:text-algorito-600'
+                  : theme === 'dark' 
+                    ? 'text-gray-300 hover:bg-gray-700 hover:text-white' 
+                    : 'text-gray-700 hover:bg-algorito-50 hover:text-algorito-600'
               }`}
               onClick={closeMenu}
             >
