@@ -38,7 +38,7 @@ const Footer: React.FC = () => {
   const contactInfo = [
     { 
       icon: <MapPin className="h-5 w-5 text-algorito-500" />, 
-      text: language === 'en' ? 'Netherlands' : 'Países Bajos'
+      text: language === 'en' ? 'Ibiza, Spain' : 'Ibiza, España'
     },
     { 
       icon: <Mail className="h-5 w-5 text-algorito-500" />, 
