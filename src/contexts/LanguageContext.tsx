@@ -79,6 +79,52 @@ const translations: Translations = {
     es: 'Los procesos automatizados han ayudado a reducir el error humano en más del 90% para nuestros clientes.' 
   },
   
+  // New translations for the comparison infographic
+  transformBusiness: { 
+    en: 'How Algorito Transforms Your Business', 
+    es: 'Cómo Algorito Transforma Tu Negocio' 
+  },
+  beforeAlgorito: {
+    en: 'Before Algorito',
+    es: 'Antes de Algorito'
+  },
+  afterAlgorito: {
+    en: 'After Algorito',
+    es: 'Después de Algorito'
+  },
+  manualProcesses: {
+    en: 'Manual, time-consuming processes',
+    es: 'Procesos manuales que consumen tiempo'
+  },
+  humanError: {
+    en: 'Prone to human error',
+    es: 'Propenso a errores humanos'
+  },
+  higherCosts: {
+    en: 'Higher operational costs',
+    es: 'Mayores costos operativos'
+  },
+  inconsistentExperiences: {
+    en: 'Inconsistent customer experiences',
+    es: 'Experiencias de cliente inconsistentes'
+  },
+  automatedWorkflows: {
+    en: 'Automated, efficient workflows',
+    es: 'Flujos de trabajo automatizados y eficientes'
+  },
+  minimizedErrors: {
+    en: 'Minimized errors and inconsistencies',
+    es: 'Errores e inconsistencias minimizadas'
+  },
+  reducedCosts: {
+    en: 'Reduced costs and resource allocation',
+    es: 'Costos reducidos y mejor asignación de recursos'
+  },
+  enhancedSatisfaction: {
+    en: 'Enhanced customer satisfaction',
+    es: 'Mayor satisfacción del cliente'
+  },
+  
   // Demos Section
   demosTitle: { en: 'Demos', es: 'Demostraciones' },
   watchDemo: { en: 'Watch Demo', es: 'Ver Demostración' },

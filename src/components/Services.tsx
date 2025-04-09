@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useTheme } from '@/contexts/ThemeContext';
 import { 
   Workflow, 
   Globe, 
@@ -12,6 +13,7 @@ import ServiceModal from './ServiceModal';
 
 const Services: React.FC = () => {
   const { t } = useLanguage();
+  const { theme } = useTheme();
   const [selectedService, setSelectedService] = useState<number | null>(null);
 
   const services = [
@@ -100,7 +102,7 @@ const Services: React.FC = () => {
   };
 
   return (
-    <section id="services" className="bg-gray-50 py-20">
+    <section id="services" className={`py-20 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'}`}>
       <div className="container mx-auto px-4">
         <h2 className="section-title">{t('ourServices')}</h2>
         
@@ -108,11 +110,13 @@ const Services: React.FC = () => {
           {services.map((service) => (
             <div 
               key={service.id} 
-              className="card p-6 flex flex-col items-center text-center transition-all duration-300 hover:translate-y-[-5px]"
+              className={`card p-6 flex flex-col items-center text-center transition-all duration-300 hover:translate-y-[-5px] ${
+                theme === 'dark' ? 'bg-gray-700 border-gray-600' : ''
+              }`}
             >
               <div className="mb-4">{service.icon}</div>
-              <h3 className="text-xl font-bold mb-3">{service.title}</h3>
-              <p className="text-gray-600 mb-4">{service.description}</p>
+              <h3 className={`text-xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : ''}`}>{service.title}</h3>
+              <p className={`mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>{service.description}</p>
               <button 
                 onClick={() => openModal(service.id)}
                 className="mt-auto text-algorito-600 font-semibold hover:text-algorito-800 transition-colors"

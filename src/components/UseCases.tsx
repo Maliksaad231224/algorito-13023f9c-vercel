@@ -1,10 +1,12 @@
 
 import React from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useTheme } from '@/contexts/ThemeContext';
 import { TrendingUp, DollarSign, AlertCircle } from 'lucide-react';
 
 const UseCases: React.FC = () => {
   const { t } = useLanguage();
+  const { theme } = useTheme();
 
   const useCases = [
     {
@@ -31,66 +33,70 @@ const UseCases: React.FC = () => {
   ];
 
   return (
-    <section id="use-cases" className="py-20">
+    <section id="use-cases" className={`py-20 ${theme === 'dark' ? 'bg-gray-900' : ''}`}>
       <div className="container mx-auto px-4">
-        <h2 className="section-title">{t('useCasesTitle')}</h2>
+        <h2 className={`section-title ${theme === 'dark' ? 'text-white' : ''}`}>{t('useCasesTitle')}</h2>
         
         <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
           {useCases.map((useCase, index) => (
-            <div key={index} className="card overflow-hidden group">
+            <div key={index} className={`card overflow-hidden group ${theme === 'dark' ? 'bg-gray-800 border-gray-700' : ''}`}>
               <div className="h-1 bg-gradient-to-r from-algorito-400 to-algorito-600"></div>
               <div className="p-6">
                 <div className="mb-4 transform group-hover:scale-110 transition-transform duration-300">
                   {useCase.icon}
                 </div>
-                <h3 className="text-xl font-bold mb-3">{useCase.title}</h3>
-                <p className="text-gray-600 mb-4">{useCase.description}</p>
-                <div className="mt-6 pt-6 border-t border-gray-100">
+                <h3 className={`text-xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : ''}`}>{useCase.title}</h3>
+                <p className={`mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>{useCase.description}</p>
+                <div className={`mt-6 pt-6 border-t ${theme === 'dark' ? 'border-gray-700' : 'border-gray-100'}`}>
                   <div className="text-3xl font-bold text-algorito-600">
                     {useCase.stats}
                   </div>
-                  <p className="text-gray-500 text-sm">{useCase.statsText}</p>
+                  <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>{useCase.statsText}</p>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Added graphic/infographic */}
-        <div className="mt-16 bg-white rounded-xl shadow-lg p-8">
-          <h3 className="text-2xl font-bold text-center mb-8">
-            {t('language') === 'en' ? 'How Algorito Transforms Your Business' : 'Cómo Algorito Transforma Tu Negocio'}
+        {/* Added graphic/infographic with dark mode support */}
+        <div className={`mt-16 rounded-xl shadow-lg p-8 ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'}`}>
+          <h3 className={`text-2xl font-bold text-center mb-8 ${theme === 'dark' ? 'text-white' : ''}`}>
+            {t('transformBusiness')}
           </h3>
           <div className="relative">
             <div className="flex flex-col md:flex-row justify-between items-center">
               {/* Before */}
-              <div className="w-full md:w-5/12 bg-gray-100 rounded-lg p-6 mb-8 md:mb-0">
-                <h4 className="text-xl font-semibold mb-4 text-gray-700">
-                  {t('language') === 'en' ? 'Before Algorito' : 'Antes de Algorito'}
+              <div className={`w-full md:w-5/12 rounded-lg p-6 mb-8 md:mb-0 ${
+                theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'
+              }`}>
+                <h4 className={`text-xl font-semibold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-700'}`}>
+                  {t('beforeAlgorito')}
                 </h4>
                 <ul className="space-y-3">
-                  <li className="flex items-center text-gray-600">
+                  <li className={`flex items-center ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                     <span className="text-red-500 mr-2">•</span>
-                    {t('language') === 'en' ? 'Manual, time-consuming processes' : 'Procesos manuales que consumen tiempo'}
+                    {t('manualProcesses')}
                   </li>
-                  <li className="flex items-center text-gray-600">
+                  <li className={`flex items-center ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                     <span className="text-red-500 mr-2">•</span>
-                    {t('language') === 'en' ? 'Prone to human error' : 'Propenso a errores humanos'}
+                    {t('humanError')}
                   </li>
-                  <li className="flex items-center text-gray-600">
+                  <li className={`flex items-center ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                     <span className="text-red-500 mr-2">•</span>
-                    {t('language') === 'en' ? 'Higher operational costs' : 'Mayores costos operativos'}
+                    {t('higherCosts')}
                   </li>
-                  <li className="flex items-center text-gray-600">
+                  <li className={`flex items-center ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
                     <span className="text-red-500 mr-2">•</span>
-                    {t('language') === 'en' ? 'Inconsistent customer experiences' : 'Experiencias de cliente inconsistentes'}
+                    {t('inconsistentExperiences')}
                   </li>
                 </ul>
               </div>
               
               {/* Arrow for desktop */}
               <div className="hidden md:block w-2/12 text-center">
-                <div className="w-20 h-20 mx-auto bg-algorito-100 rounded-full flex items-center justify-center">
+                <div className={`w-20 h-20 mx-auto rounded-full flex items-center justify-center ${
+                  theme === 'dark' ? 'bg-gray-700' : 'bg-algorito-100'
+                }`}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-12 w-12 text-algorito-600"
@@ -109,26 +115,30 @@ const UseCases: React.FC = () => {
               </div>
               
               {/* After */}
-              <div className="w-full md:w-5/12 bg-algorito-50 rounded-lg p-6">
-                <h4 className="text-xl font-semibold mb-4 text-algorito-700">
-                  {t('language') === 'en' ? 'After Algorito' : 'Después de Algorito'}
+              <div className={`w-full md:w-5/12 rounded-lg p-6 ${
+                theme === 'dark' ? 'bg-gray-700' : 'bg-algorito-50'
+              }`}>
+                <h4 className={`text-xl font-semibold mb-4 ${
+                  theme === 'dark' ? 'text-white' : 'text-algorito-700'
+                }`}>
+                  {t('afterAlgorito')}
                 </h4>
                 <ul className="space-y-3">
-                  <li className="flex items-center text-gray-700">
+                  <li className={`flex items-center ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                     <span className="text-green-500 mr-2">•</span>
-                    {t('language') === 'en' ? 'Automated, efficient workflows' : 'Flujos de trabajo automatizados y eficientes'}
+                    {t('automatedWorkflows')}
                   </li>
-                  <li className="flex items-center text-gray-700">
+                  <li className={`flex items-center ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                     <span className="text-green-500 mr-2">•</span>
-                    {t('language') === 'en' ? 'Minimized errors and inconsistencies' : 'Errores e inconsistencias minimizadas'}
+                    {t('minimizedErrors')}
                   </li>
-                  <li className="flex items-center text-gray-700">
+                  <li className={`flex items-center ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                     <span className="text-green-500 mr-2">•</span>
-                    {t('language') === 'en' ? 'Reduced costs and resource allocation' : 'Costos reducidos y mejor asignación de recursos'}
+                    {t('reducedCosts')}
                   </li>
-                  <li className="flex items-center text-gray-700">
+                  <li className={`flex items-center ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
                     <span className="text-green-500 mr-2">•</span>
-                    {t('language') === 'en' ? 'Enhanced customer satisfaction' : 'Mayor satisfacción del cliente'}
+                    {t('enhancedSatisfaction')}
                   </li>
                 </ul>
               </div>
