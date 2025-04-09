@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface Translations {
@@ -38,6 +39,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       useCases: 'Use Cases',
       demos: 'Demos',
       reviews: 'Reviews',
+      reviewsTitle: 'Reviews',
       bookCall: 'Book a Call',
       about: 'About',
       bookingTitle: 'Book a Free Consultation',
@@ -108,6 +110,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       useCases: 'Casos de Uso',
       demos: 'Demos',
       reviews: 'Reseñas',
+      reviewsTitle: 'Reseñas',
       bookCall: 'Agendar Cita',
       about: 'Acerca de',
       bookingTitle: 'Agendar una Consulta Gratuita',

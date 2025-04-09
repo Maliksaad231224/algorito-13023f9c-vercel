@@ -70,7 +70,9 @@ const Testimonials: React.FC = () => {
   return (
     <section id="reviews" className={`py-20 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gradient-to-b from-white to-gray-50'}`}>
       <div className="container mx-auto px-4">
-        <h2 className={`section-title ${theme === 'dark' ? 'text-white' : ''}`}>{t('reviewsTitle')}</h2>
+        <h2 className={`section-title ${theme === 'dark' ? 'text-white' : ''}`}>
+          {language === 'en' ? 'Reviews' : 'Reseñas'}
+        </h2>
         
         <div className="relative mt-12 max-w-4xl mx-auto">
           {/* Navigation Buttons */}
@@ -142,22 +144,6 @@ const Testimonials: React.FC = () => {
                 }`}
                 aria-label={`Go to testimonial ${index + 1}`}
               />
-            ))}
-          </div>
-        </div>
-        
-        {/* Client Logos (Placeholder) */}
-        <div className="mt-16">
-          <p className={`text-center ${
-            theme === 'dark' ? 'text-gray-400' : 'text-gray-500'
-          } mb-6`}>
-            {language === 'en' ? 'Trusted by companies worldwide' : 'Empresas que confían en nosotros'}
-          </p>
-          <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-            {Array(5).fill(0).map((_, i) => (
-              <div key={i} className={`h-12 ${
-                theme === 'dark' ? 'bg-gray-700' : 'bg-gray-300'
-              } w-32 rounded`}></div>
             ))}
           </div>
         </div>
