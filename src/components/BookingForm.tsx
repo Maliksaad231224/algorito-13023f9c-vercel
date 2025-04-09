@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useToast } from '@/hooks/use-toast';
@@ -15,6 +15,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { sendEmail } from '@/utils/emailService';
+import { InlineWidget } from 'react-calendly';
 
 const BookingForm: React.FC = () => {
   const { t, language } = useLanguage();
@@ -28,6 +29,7 @@ const BookingForm: React.FC = () => {
   const [message, setMessage] = useState('');
   const [errors, setErrors] = useState<{[key: string]: string}>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showCalendly, setShowCalendly] = useState(false);
 
   // Time slots
   const timeSlots = [
@@ -42,8 +44,12 @@ const BookingForm: React.FC = () => {
     if (!name.trim()) newErrors.name = t('required');
     if (!email.trim()) newErrors.email = t('required');
     else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = t('invalidEmail');
-    if (!date) newErrors.date = t('required');
-    if (!time) newErrors.time = t('required');
+    
+    // When using Calendly, we don't need to validate date and time
+    if (!showCalendly) {
+      if (!date) newErrors.date = t('required');
+      if (!time) newErrors.time = t('required');
+    }
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -85,6 +91,11 @@ const BookingForm: React.FC = () => {
           setDate(undefined);
           setTime('');
           setMessage('');
+          
+          // Show calendly after form submission if not already shown
+          if (!showCalendly) {
+            setShowCalendly(true);
+          }
         } else {
           // Show error message
           toast({
@@ -118,7 +129,7 @@ const BookingForm: React.FC = () => {
           {t('bookingSubtitle')}
         </p>
         
-        <div className={`${theme === 'dark' ? 'bg-gray-900' : 'bg-white'} rounded-2xl shadow-xl max-w-3xl mx-auto overflow-hidden`}>
+        <div className={`${theme === 'dark' ? 'bg-gray-900' : 'bg-white'} rounded-2xl shadow-xl max-w-5xl mx-auto overflow-hidden`}>
           <div className="grid md:grid-cols-5">
             {/* Left side - decoration */}
             <div className="hidden md:block md:col-span-2 bg-gradient-to-br from-algorito-600 to-algorito-800 text-white p-10">
@@ -162,153 +173,212 @@ const BookingForm: React.FC = () => {
             
             {/* Right side - form */}
             <div className="p-6 md:p-10 md:col-span-3">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label htmlFor="name" className={`block text-sm font-medium ${
-                    theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-                  } mb-1`}>
-                    {t('yourName')} *
-                  </label>
-                  <Input
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder={language === 'en' ? 'Enter your name' : 'Introduce tu nombre'}
-                    className={errors.name ? 'border-red-300' : ''}
-                    disabled={isSubmitting}
-                  />
-                  {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className={`block text-sm font-medium ${
-                    theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-                  } mb-1`}>
-                    {t('yourEmail')} *
-                  </label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder={language === 'en' ? 'Enter your email' : 'Introduce tu email'}
-                    className={errors.email ? 'border-red-300' : ''}
-                    disabled={isSubmitting}
-                  />
-                  {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
-                </div>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {!showCalendly ? (
+                <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
-                    <label className={`block text-sm font-medium ${
+                    <label htmlFor="name" className={`block text-sm font-medium ${
                       theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
                     } mb-1`}>
-                      {t('preferredDate')} *
+                      {t('yourName')} *
                     </label>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <button
-                          type="button"
-                          className={`w-full flex items-center justify-between border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-algorito-500 ${
-                            errors.date ? 'border-red-300' : theme === 'dark' ? 'border-gray-700' : 'border-gray-300'
-                          } ${!date ? 'text-gray-400' : theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}
-                          disabled={isSubmitting}
-                        >
-                          {date ? (
-                            format(date, 'PPP', { locale: language === 'es' ? es : undefined })
-                          ) : (
-                            <span>{language === 'en' ? 'Select date' : 'Seleccionar fecha'}</span>
-                          )}
-                          <CalendarIcon className="ml-2 h-4 w-4 opacity-50" />
-                        </button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={date}
-                          onSelect={setDate}
-                          disabled={(date) => date < new Date() || date.getDay() === 0 || date.getDay() === 6}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    {errors.date && <p className="mt-1 text-sm text-red-500">{errors.date}</p>}
+                    <Input
+                      id="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder={language === 'en' ? 'Enter your name' : 'Introduce tu nombre'}
+                      className={errors.name ? 'border-red-300' : ''}
+                      disabled={isSubmitting}
+                    />
+                    {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
                   </div>
                   
                   <div>
-                    <label className={`block text-sm font-medium ${
+                    <label htmlFor="email" className={`block text-sm font-medium ${
                       theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
                     } mb-1`}>
-                      {t('preferredTime')} *
+                      {t('yourEmail')} *
                     </label>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <button
-                          type="button"
-                          className={`w-full flex items-center justify-between border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-algorito-500 ${
-                            errors.time ? 'border-red-300' : theme === 'dark' ? 'border-gray-700' : 'border-gray-300'
-                          } ${!time ? 'text-gray-400' : theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}
-                          disabled={isSubmitting}
-                        >
-                          {time || (language === 'en' ? 'Select time' : 'Seleccionar hora')}
-                          <Clock className="ml-2 h-4 w-4 opacity-50" />
-                        </button>
-                      </PopoverTrigger>
-                      <PopoverContent className={`w-48 p-0 ${theme === 'dark' ? 'bg-gray-800' : ''}`} align="start">
-                        <div className="max-h-[200px] overflow-auto p-2">
-                          {timeSlots.map((slot) => (
-                            <button
-                              key={slot}
-                              type="button"
-                              onClick={() => setTime(slot)}
-                              className={`w-full text-left px-2 py-1 rounded-md my-1 ${
-                                theme === 'dark' 
-                                  ? time === slot 
-                                    ? 'bg-algorito-600 text-white' 
-                                    : 'hover:bg-gray-700 text-gray-300'
-                                  : time === slot 
-                                    ? 'bg-algorito-100 text-algorito-800' 
-                                    : 'hover:bg-algorito-50'
-                              }`}
-                            >
-                              {slot}
-                            </button>
-                          ))}
-                        </div>
-                      </PopoverContent>
-                    </Popover>
-                    {errors.time && <p className="mt-1 text-sm text-red-500">{errors.time}</p>}
+                    <Input
+                      id="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder={language === 'en' ? 'Enter your email' : 'Introduce tu email'}
+                      className={errors.email ? 'border-red-300' : ''}
+                      disabled={isSubmitting}
+                    />
+                    {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
                   </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label className={`block text-sm font-medium ${
+                        theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                      } mb-1`}>
+                        {t('preferredDate')} *
+                      </label>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <button
+                            type="button"
+                            className={`w-full flex items-center justify-between border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-algorito-500 ${
+                              errors.date ? 'border-red-300' : theme === 'dark' ? 'border-gray-700' : 'border-gray-300'
+                            } ${!date ? 'text-gray-400' : theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}
+                            disabled={isSubmitting}
+                          >
+                            {date ? (
+                              format(date, 'PPP', { locale: language === 'es' ? es : undefined })
+                            ) : (
+                              <span>{language === 'en' ? 'Select date' : 'Seleccionar fecha'}</span>
+                            )}
+                            <CalendarIcon className="ml-2 h-4 w-4 opacity-50" />
+                          </button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={date}
+                            onSelect={setDate}
+                            disabled={(date) => date < new Date() || date.getDay() === 0 || date.getDay() === 6}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      {errors.date && <p className="mt-1 text-sm text-red-500">{errors.date}</p>}
+                    </div>
+                    
+                    <div>
+                      <label className={`block text-sm font-medium ${
+                        theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                      } mb-1`}>
+                        {t('preferredTime')} *
+                      </label>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <button
+                            type="button"
+                            className={`w-full flex items-center justify-between border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-algorito-500 ${
+                              errors.time ? 'border-red-300' : theme === 'dark' ? 'border-gray-700' : 'border-gray-300'
+                            } ${!time ? 'text-gray-400' : theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}
+                            disabled={isSubmitting}
+                          >
+                            {time || (language === 'en' ? 'Select time' : 'Seleccionar hora')}
+                            <Clock className="ml-2 h-4 w-4 opacity-50" />
+                          </button>
+                        </PopoverTrigger>
+                        <PopoverContent className={`w-48 p-0 ${theme === 'dark' ? 'bg-gray-800' : ''}`} align="start">
+                          <div className="max-h-[200px] overflow-auto p-2">
+                            {timeSlots.map((slot) => (
+                              <button
+                                key={slot}
+                                type="button"
+                                onClick={() => setTime(slot)}
+                                className={`w-full text-left px-2 py-1 rounded-md my-1 ${
+                                  theme === 'dark' 
+                                    ? time === slot 
+                                      ? 'bg-algorito-600 text-white' 
+                                      : 'hover:bg-gray-700 text-gray-300'
+                                    : time === slot 
+                                      ? 'bg-algorito-100 text-algorito-800' 
+                                      : 'hover:bg-algorito-50'
+                                }`}
+                              >
+                                {slot}
+                              </button>
+                            ))}
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                      {errors.time && <p className="mt-1 text-sm text-red-500">{errors.time}</p>}
+                    </div>
+                  </div>
+                  
+                  <div>
+                    <label htmlFor="message" className={`block text-sm font-medium ${
+                      theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                    } mb-1`}>
+                      {t('message')}
+                    </label>
+                    <Textarea
+                      id="message"
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      placeholder={language === 'en' ? 'Tell us about your automation needs' : 'Cuéntanos sobre tus necesidades de automatización'}
+                      rows={3}
+                      className={theme === 'dark' ? 'bg-gray-800 border-gray-700 text-gray-300' : ''}
+                      disabled={isSubmitting}
+                    />
+                  </div>
+                  
+                  <div className="flex space-x-4">
+                    <button 
+                      type="submit" 
+                      className={`flex-1 btn-primary py-3 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting 
+                        ? (language === 'en' ? 'Sending...' : 'Enviando...') 
+                        : t('bookNow')}
+                    </button>
+                    
+                    <button
+                      type="button"
+                      onClick={() => setShowCalendly(true)}
+                      className={`flex-1 bg-gray-100 text-gray-800 hover:bg-gray-200 py-3 px-6 rounded-lg font-medium transition-colors ${
+                        theme === 'dark' ? 'bg-gray-700 text-white hover:bg-gray-600' : ''
+                      }`}
+                    >
+                      {language === 'en' ? 'View Calendar' : 'Ver Calendario'}
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <div className="booking-calendar">
+                  <h3 className={`text-xl font-semibold mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-800'}`}>
+                    {language === 'en' ? 'Select a Time Slot' : 'Selecciona un Horario'}
+                  </h3>
+                  
+                  {/* Note: Replace this URL with your actual Calendly URL */}
+                  <div className="h-[600px] w-full">
+                    <InlineWidget 
+                      url="https://calendly.com/example"
+                      styles={{
+                        height: '100%',
+                        width: '100%',
+                      }}
+                      prefill={{
+                        email: email,
+                        name: name,
+                      }}
+                    />
+                  </div>
+                  
+                  <button
+                    type="button"
+                    onClick={() => setShowCalendly(false)}
+                    className={`mt-4 py-2 px-4 rounded-lg text-sm ${
+                      theme === 'dark' 
+                        ? 'bg-gray-700 text-white hover:bg-gray-600' 
+                        : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
+                    }`}
+                  >
+                    {language === 'en' ? 'Back to Form' : 'Volver al Formulario'}
+                  </button>
                 </div>
-                
-                <div>
-                  <label htmlFor="message" className={`block text-sm font-medium ${
-                    theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-                  } mb-1`}>
-                    {t('message')}
-                  </label>
-                  <Textarea
-                    id="message"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    placeholder={language === 'en' ? 'Tell us about your automation needs' : 'Cuéntanos sobre tus necesidades de automatización'}
-                    rows={3}
-                    className={theme === 'dark' ? 'bg-gray-800 border-gray-700 text-gray-300' : ''}
-                    disabled={isSubmitting}
-                  />
-                </div>
-                
-                <button 
-                  type="submit" 
-                  className={`w-full btn-primary py-3 ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting 
-                    ? (language === 'en' ? 'Sending...' : 'Enviando...') 
-                    : t('bookNow')}
-                </button>
-              </form>
+              )}
             </div>
+          </div>
+        </div>
+        
+        <div className="mt-10 text-center">
+          <div className={`inline-block border border-gray-300 rounded-lg p-4 ${
+            theme === 'dark' ? 'bg-gray-800 text-gray-300' : 'bg-white text-gray-600'
+          }`}>
+            <p className="text-sm">
+              {language === 'en' 
+                ? 'To set up the calendar integration, create a free account at Calendly.com and replace the example URL with your own.' 
+                : 'Para configurar la integración del calendario, crea una cuenta gratuita en Calendly.com y reemplaza la URL de ejemplo con la tuya.'}
+            </p>
           </div>
         </div>
       </div>
