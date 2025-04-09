@@ -41,13 +41,13 @@ const Hero: React.FC = () => {
         <div className="md:w-1/2 flex justify-center">
           {theme === 'dark' ? (
             <img
-              src="/lovable-uploads/d7c2721c-8791-47fb-8965-369780bbb9cd.png"
+              src="/lovable-uploads/57ded8d5-87c0-4446-845b-249acf04b6c7.png"
               alt="Algorito Mascot Dark"
               className="w-full max-w-md animate-fade-in"
             />
           ) : (
             <img
-              src="/lovable-uploads/57ded8d5-87c0-4446-845b-249acf04b6c7.png"
+              src="/lovable-uploads/d7c2721c-8791-47fb-8965-369780bbb9cd.png"
               alt="Algorito Mascot Light"
               className="w-full max-w-md animate-fade-in"
             />
