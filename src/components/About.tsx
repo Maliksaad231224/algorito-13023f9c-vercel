@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -38,7 +37,6 @@ const About: React.FC = () => {
       setIsSubmitting(true);
       
       try {
-        // Send the contact form data to the email service
         const subject = language === 'en' 
           ? `Contact Form Message from ${name}`
           : `Mensaje del Formulario de Contacto de ${name}`;
@@ -51,7 +49,6 @@ const About: React.FC = () => {
         });
         
         if (success) {
-          // Show success message
           toast({
             title: t('messageSent'),
             description: language === 'en' 
@@ -59,12 +56,10 @@ const About: React.FC = () => {
               : 'Tu mensaje ha sido enviado a algoritoai@gmail.com. Nos pondremos en contacto contigo lo antes posible.',
           });
           
-          // Reset form
           setName('');
           setEmail('');
           setMessage('');
         } else {
-          // Show error message
           toast({
             title: t('error'),
             description: language === 'en' 
@@ -92,7 +87,6 @@ const About: React.FC = () => {
     <section id="about" className={`py-20 ${theme === 'dark' ? 'bg-gray-900 text-white' : ''}`}>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-          {/* About Column */}
           <div>
             <h2 className="text-3xl font-bold mb-6">{t('aboutTitle')}</h2>
             <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mb-8`}>{t('aboutDesc')}</p>
@@ -105,12 +99,6 @@ const About: React.FC = () => {
                 <div>
                   <h3 className="font-semibold text-lg">{t('ourLocation')}</h3>
                   <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>Ibiza, Spain</p>
-                  <div className="mt-2 h-48 w-full bg-gray-200 rounded-lg overflow-hidden">
-                    {/* This would be a map component, using a placeholder for now */}
-                    <div className="h-full w-full flex items-center justify-center text-gray-400">
-                      {language === 'en' ? 'Map Placeholder' : 'Ubicación del Mapa'}
-                    </div>
-                  </div>
                 </div>
               </div>
               
@@ -131,7 +119,6 @@ const About: React.FC = () => {
             </div>
           </div>
           
-          {/* Contact Form Column */}
           <div>
             <h2 className="text-3xl font-bold mb-6">{t('contactTitle')}</h2>
             <div className={`${theme === 'dark' ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg p-6 md:p-8`}>
