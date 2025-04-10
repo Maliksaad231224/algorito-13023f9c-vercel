@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface Translations {
@@ -105,6 +104,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       watchDemo: 'Watch Demo',
       termsOfService: 'Terms of Service',
       privacyPolicy: 'Privacy Policy',
+      keyFeatures: 'Key Features',
     },
     es: {
       home: 'Inicio',
@@ -178,6 +178,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       watchDemo: 'Ver Demo',
       termsOfService: 'Términos de Servicio',
       privacyPolicy: 'Política de Privacidad',
+      keyFeatures: 'Características Principales',
     }
   };
 

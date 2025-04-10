@@ -13,7 +13,7 @@ import {
 import ServiceModal from './ServiceModal';
 
 const Services: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { theme } = useTheme();
   const [selectedService, setSelectedService] = useState<number | null>(null);
 
@@ -23,13 +23,21 @@ const Services: React.FC = () => {
       title: t('workflowAutomation'),
       description: t('workflowAutomationDesc'),
       icon: <Workflow size={48} className="text-algorito-600" />,
-      modalDescription: "Our workflow automation services use leading tools like Make.com and n8n to eliminate repetitive tasks and streamline your business processes.",
-      features: [
+      modalDescription: language === 'en' 
+        ? "Our workflow automation services use leading tools like Make.com and n8n to eliminate repetitive tasks and streamline your business processes."
+        : "Nuestros servicios de automatización de flujos de trabajo utilizan herramientas líderes como Make.com y n8n para eliminar tareas repetitivas y optimizar sus procesos empresariales.",
+      features: language === 'en' ? [
         "Integration with 1000+ apps and services",
         "No-code automation workflows",
         "Real-time monitoring and error handling",
         "Scalable solutions for businesses of all sizes",
         "Custom triggers and actions based on your needs"
+      ] : [
+        "Integración con más de 1000 aplicaciones y servicios",
+        "Flujos de automatización sin código",
+        "Monitoreo en tiempo real y manejo de errores",
+        "Soluciones escalables para empresas de todos los tamaños",
+        "Disparadores y acciones personalizadas según sus necesidades"
       ]
     },
     {
@@ -37,13 +45,21 @@ const Services: React.FC = () => {
       title: t('websiteBuilding'),
       description: t('websiteBuildingDesc'),
       icon: <Globe size={48} className="text-algorito-600" />,
-      modalDescription: "Build stunning, high-performing websites powered by the latest AI technologies that adapt to your users' needs.",
-      features: [
+      modalDescription: language === 'en'
+        ? "Build stunning, high-performing websites powered by the latest AI technologies that adapt to your users' needs."
+        : "Cree sitios web impresionantes de alto rendimiento impulsados por las últimas tecnologías de IA que se adaptan a las necesidades de sus usuarios.",
+      features: language === 'en' ? [
         "AI-driven design recommendations",
         "Mobile-first responsive layouts",
         "SEO-optimized structure and content",
         "Integrated analytics and performance tracking",
         "Secure hosting with 99.9% uptime guarantee"
+      ] : [
+        "Recomendaciones de diseño impulsadas por IA",
+        "Diseños responsivos enfocados en dispositivos móviles",
+        "Estructura y contenido optimizados para SEO",
+        "Análisis integrado y seguimiento del rendimiento",
+        "Alojamiento seguro con garantía de disponibilidad del 99.9%"
       ]
     },
     {
@@ -51,13 +67,21 @@ const Services: React.FC = () => {
       title: t('chatbotIntegration'),
       description: t('chatbotIntegrationDesc'),
       icon: <MessageSquare size={48} className="text-algorito-600" />,
-      modalDescription: "Enhance your customer support with intelligent, customized chatbot solutions that learn and improve over time.",
-      features: [
+      modalDescription: language === 'en'
+        ? "Enhance your customer support with intelligent, customized chatbot solutions that learn and improve over time."
+        : "Mejore su atención al cliente con soluciones de chatbot inteligentes y personalizadas que aprenden y mejoran con el tiempo.",
+      features: language === 'en' ? [
         "Natural language processing capabilities",
         "Seamless integration with your existing website",
         "24/7 customer support automation",
         "Multi-language support",
         "Analytics dashboard to monitor conversations"
+      ] : [
+        "Capacidades de procesamiento de lenguaje natural",
+        "Integración perfecta con su sitio web existente",
+        "Automatización de atención al cliente 24/7",
+        "Soporte multilingüe",
+        "Panel de análisis para monitorear conversaciones"
       ]
     },
     {
@@ -65,13 +89,21 @@ const Services: React.FC = () => {
       title: t('crmAutomation'),
       description: t('crmAutomationDesc'),
       icon: <Mail size={48} className="text-algorito-600" />,
-      modalDescription: "Streamline your customer relationship management and email marketing campaigns with intelligent automation.",
-      features: [
+      modalDescription: language === 'en'
+        ? "Streamline your customer relationship management and email marketing campaigns with intelligent automation."
+        : "Optimice la gestión de relaciones con los clientes y las campañas de marketing por correo electrónico con automatización inteligente.",
+      features: language === 'en' ? [
         "Automated lead scoring and qualification",
         "Personalized email sequences",
         "Customer journey mapping and automation",
         "Integration with popular CRM platforms",
         "Performance analytics and optimization suggestions"
+      ] : [
+        "Puntuación y calificación automatizada de leads",
+        "Secuencias de correo electrónico personalizadas",
+        "Mapeo y automatización del recorrido del cliente",
+        "Integración con plataformas CRM populares",
+        "Análisis de rendimiento y sugerencias de optimización"
       ]
     },
     {
@@ -79,13 +111,21 @@ const Services: React.FC = () => {
       title: t('dataSync'),
       description: t('dataSyncDesc'),
       icon: <Database size={48} className="text-algorito-600" />,
-      modalDescription: "Keep your data synchronized across platforms and generate insightful reports for better decision-making.",
-      features: [
+      modalDescription: language === 'en'
+        ? "Keep your data synchronized across platforms and generate insightful reports for better decision-making."
+        : "Mantenga sus datos sincronizados entre plataformas y genere informes perspicaces para una mejor toma de decisiones.",
+      features: language === 'en' ? [
         "Real-time data synchronization",
         "Custom report generation",
         "Data visualization dashboards",
         "Scheduled exports and imports",
         "Data integrity validation and error handling"
+      ] : [
+        "Sincronización de datos en tiempo real",
+        "Generación de informes personalizados",
+        "Paneles de visualización de datos",
+        "Exportaciones e importaciones programadas",
+        "Validación de integridad de datos y manejo de errores"
       ]
     }
   ];
