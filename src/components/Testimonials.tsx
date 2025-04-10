@@ -13,14 +13,14 @@ const Testimonials: React.FC = () => {
   const testimonials = [
     {
       id: 1,
-      name: 'Sarah Johnson',
-      company: 'Tech Innovations Ltd',
+      name: 'Martí González',
+      company: 'MG7 Luxury Agency',
       rating: 5,
       text: {
-        en: 'Algorito transformed our customer service workflow. We\'ve reduced response times by 60% and our team can now focus on complex issues while the AI handles routine inquiries.',
-        es: 'Algorito transformó nuestro flujo de trabajo de servicio al cliente. Hemos reducido los tiempos de respuesta en un 60% y nuestro equipo ahora puede centrarse en problemas complejos mientras la IA maneja las consultas rutinarias.'
+        en: 'Algorito transformed our daily tasks at MG7 Luxury Agency. By refining our CRM and automating provider collaboration, we cut manual work by 65%, letting us concentrate on premium campaigns that wow our exclusive clientele.',
+        es: 'Algorito transformó nuestras tareas diarias en MG7 Luxury Agency. Al perfeccionar nuestro CRM y automatizar la colaboración con los proveedores, redujimos el trabajo manual en un 65 %, lo que nos permitió concentrarnos en campañas premium que cautivan a nuestra exclusiva clientela.'
       },
-      image: 'https://randomuser.me/api/portraits/women/32.jpg',
+      image: 'https://media.licdn.com/dms/image/v2/D4E03AQExIRsXQPywtg/profile-displayphoto-shrink_100_100/B4EZWkAsoCHMAc-/0/1742213401612?e=1749686400&v=beta&t=suKR1tsRTE4fLP0ROEshjq_Gry2R5l26MaDiQE5Pq-A',
     },
     {
       id: 2,
