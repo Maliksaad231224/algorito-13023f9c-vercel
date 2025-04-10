@@ -1,10 +1,12 @@
 
 import React from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useTheme } from '@/contexts/ThemeContext';
 import { Play, ExternalLink } from 'lucide-react';
 
 const Demos: React.FC = () => {
   const { t, language } = useLanguage();
+  const { theme } = useTheme();
 
   // Demo videos data (placeholders)
   const demoVideos = [
@@ -29,13 +31,13 @@ const Demos: React.FC = () => {
   ];
 
   return (
-    <section id="demos" className="bg-gray-900 py-24 text-white">
+    <section id="demos" className={`${theme === 'light' ? 'bg-white text-gray-800' : 'bg-gray-900 text-white'} py-24`}>
       <div className="container mx-auto px-4">
-        <h2 className="section-title text-white">{t('demosTitle')}</h2>
+        <h2 className={`section-title ${theme === 'light' ? 'text-gray-800' : 'text-white'}`}>{t('demosTitle')}</h2>
         
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {demoVideos.map((demo) => (
-            <div key={demo.id} className="group relative overflow-hidden rounded-xl shadow-lg">
+            <div key={demo.id} className={`group relative overflow-hidden rounded-xl shadow-lg ${theme === 'light' ? 'bg-gray-100' : ''}`}>
               {/* Overlay gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70 z-10"></div>
               

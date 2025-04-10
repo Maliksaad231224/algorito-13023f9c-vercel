@@ -37,18 +37,18 @@ const Footer: React.FC = () => {
   // Contact info
   const contactInfo = [
     { 
-      icon: <MapPin className="h-5 w-5 text-algorito-500" />, 
+      icon: <MapPin className={`h-5 w-5 ${theme === 'light' ? 'text-algorito-600' : 'text-algorito-500'}`} />, 
       text: language === 'en' ? 'Ibiza, Spain' : 'Ibiza, España'
     },
     { 
-      icon: <Mail className="h-5 w-5 text-algorito-500" />, 
+      icon: <Mail className={`h-5 w-5 ${theme === 'light' ? 'text-algorito-600' : 'text-algorito-500'}`} />, 
       text: 'algoritoai@gmail.com',
       href: 'mailto:algoritoai@gmail.com'
     },
   ];
 
   return (
-    <footer className="bg-gray-900 text-white pt-20 pb-8">
+    <footer className={`${theme === 'light' ? 'bg-white text-gray-800' : 'bg-gray-900 text-white'} pt-20 pb-8`}>
       <div className="container mx-auto px-4">
         {/* Footer Top */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
@@ -61,7 +61,7 @@ const Footer: React.FC = () => {
                 className="h-14"
               />
             </div>
-            <p className="text-gray-400 mb-8 max-w-lg">
+            <p className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-400'} mb-8 max-w-lg`}>
               {language === 'en'
                 ? 'Revolutionizing workflows with AI automation. Let technology handle repetitive tasks while you focus on growth.'
                 : 'Revolucionando flujos de trabajo con automatización IA. Deja que la tecnología maneje tareas repetitivas mientras te enfocas en el crecimiento.'}
@@ -71,13 +71,13 @@ const Footer: React.FC = () => {
             <div className="space-y-4 mb-8">
               {contactInfo.map((item, index) => (
                 <div key={index} className="flex items-center">
-                  <span className="mr-3 bg-gray-800 p-2 rounded-full">{item.icon}</span>
+                  <span className={`mr-3 ${theme === 'light' ? 'bg-gray-100' : 'bg-gray-800'} p-2 rounded-full`}>{item.icon}</span>
                   {item.href ? (
-                    <a href={item.href} className="text-gray-400 hover:text-white transition-colors duration-200">
+                    <a href={item.href} className={`${theme === 'light' ? 'text-gray-600 hover:text-gray-900' : 'text-gray-400 hover:text-white'} transition-colors duration-200`}>
                       {item.text}
                     </a>
                   ) : (
-                    <span className="text-gray-400">{item.text}</span>
+                    <span className={theme === 'light' ? 'text-gray-600' : 'text-gray-400'}>{item.text}</span>
                   )}
                 </div>
               ))}
@@ -89,7 +89,7 @@ const Footer: React.FC = () => {
                 <a
                   key={index}
                   href={link.href}
-                  className="bg-gray-800 p-3 rounded-full hover:bg-algorito-600 transition-colors duration-300"
+                  className={`${theme === 'light' ? 'bg-gray-100 hover:bg-algorito-100' : 'bg-gray-800 hover:bg-algorito-600'} p-3 rounded-full transition-colors duration-300`}
                   aria-label={link.label}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -102,7 +102,7 @@ const Footer: React.FC = () => {
           
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl font-bold mb-8 relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-16 after:h-1 after:bg-algorito-500">
+            <h3 className={`text-xl font-bold mb-8 relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-16 after:h-1 after:bg-algorito-500`}>
               {language === 'en' ? 'Quick Links' : 'Enlaces Rápidos'}
             </h3>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -110,7 +110,7 @@ const Footer: React.FC = () => {
                 <li key={index}>
                   <a 
                     href={link.href} 
-                    className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center"
+                    className={`${theme === 'light' ? 'text-gray-600 hover:text-gray-900' : 'text-gray-400 hover:text-white'} transition-colors duration-200 flex items-center`}
                   >
                     <span className="mr-2 text-xs">›</span>
                     {link.name}
@@ -122,8 +122,8 @@ const Footer: React.FC = () => {
         </div>
         
         {/* Footer Bottom */}
-        <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-500 mb-4 md:mb-0">
+        <div className={`pt-8 border-t ${theme === 'light' ? 'border-gray-200' : 'border-gray-800'} flex flex-col md:flex-row justify-between items-center`}>
+          <p className={theme === 'light' ? 'text-gray-600 mb-4 md:mb-0' : 'text-gray-500 mb-4 md:mb-0'}>
             &copy; {currentYear} Algorito. {language === 'en' ? 'All rights reserved.' : 'Todos los derechos reservados.'}
           </p>
           
@@ -132,7 +132,7 @@ const Footer: React.FC = () => {
               <a 
                 key={index} 
                 href={link.href} 
-                className="text-gray-500 hover:text-white transition-colors duration-200"
+                className={`${theme === 'light' ? 'text-gray-600 hover:text-gray-900' : 'text-gray-500 hover:text-white'} transition-colors duration-200`}
               >
                 {link.name}
               </a>
