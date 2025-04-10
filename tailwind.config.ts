@@ -77,8 +77,9 @@ export default {
 				}
 			},
 			fontFamily: {
-				'nunito': ['Nunito', 'sans-serif'],
-				'inter': ['Inter', 'sans-serif'],
+				// Replacing the rounded fonts with more edgy, tech-oriented fonts
+				'nunito': ['Montserrat', 'sans-serif'],
+				'inter': ['Roboto', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

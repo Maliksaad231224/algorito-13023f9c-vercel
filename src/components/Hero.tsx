@@ -32,11 +32,23 @@ const Hero: React.FC = () => {
       
       <div className="container mx-auto px-4 flex flex-col md:flex-row items-center z-10">
         <div className="md:w-1/2 text-center md:text-left mb-10 md:mb-0">
-          <div className="mb-6 inline-block px-4 py-1.5 bg-algorito-100 dark:bg-algorito-900/40 text-algorito-700 dark:text-algorito-300 rounded-full font-medium text-sm">
+          {/* Custom logo display in hero section */}
+          <div className="mb-8 inline-block">
+            <img
+              src="/lovable-uploads/860c51a7-25b8-467e-bd34-65f7d8440f5a.png"
+              alt="Algorito"
+              className="h-16 md:h-20 mb-2"
+            />
+            <p className="text-sm tracking-widest text-algorito-700 dark:text-algorito-400 uppercase font-medium">
+              {t('automateNow')}
+            </p>
+          </div>
+          
+          <div className="mb-6 inline-block px-4 py-1.5 bg-algorito-100 dark:bg-algorito-900/40 text-algorito-700 dark:text-algorito-300 rounded-md font-medium text-sm">
             {t('heroTagline')}
           </div>
           
-          <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight ${
+          <h1 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight ${
             theme === 'dark' ? 'text-white' : 'text-gray-900'
           }`}>
             {t('heroTitle')}

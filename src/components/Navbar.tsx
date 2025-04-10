@@ -41,9 +41,28 @@ const Navbar: React.FC = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Close menu when a link is clicked
-  const closeMenu = () => {
-    setIsMenuOpen(false);
+  // Improved smooth scroll function
+  const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    
+    // Close menu if open
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+    }
+    
+    const targetId = href.substring(1);
+    const element = document.getElementById(targetId);
+    
+    if (element) {
+      const navHeight = 80; // Estimated navbar height
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
   };
 
   return (
@@ -58,11 +77,15 @@ const Navbar: React.FC = () => {
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
         {/* Logo */}
-        <a href="#home" className="flex items-center">
+        <a 
+          href="#home" 
+          onClick={(e) => handleSmoothScroll(e, '#home')}
+          className="flex items-center"
+        >
           <img
             src="/lovable-uploads/bdec6477-9f00-4878-a0a5-f69bada51441.png"
             alt="Algorito Logo"
-            className="h-12 md:h-14"
+            className="h-10 md:h-12"
           />
         </a>
 
@@ -72,6 +95,7 @@ const Navbar: React.FC = () => {
             <a
               key={item.href}
               href={item.href}
+              onClick={(e) => handleSmoothScroll(e, item.href)}
               className={`px-3 py-2 rounded-md text-sm font-medium hover:text-algorito-600 transition-colors ${
                 item.name === t('bookCall')
                   ? 'bg-algorito-600 text-white hover:bg-algorito-700 hover:text-white ml-2'
@@ -137,6 +161,7 @@ const Navbar: React.FC = () => {
             <a
               key={item.href}
               href={item.href}
+              onClick={(e) => handleSmoothScroll(e, item.href)}
               className={`block px-4 py-3 rounded-lg text-base font-medium ${
                 item.name === t('bookCall')
                   ? 'bg-algorito-600 text-white'
@@ -144,7 +169,6 @@ const Navbar: React.FC = () => {
                     ? 'text-gray-300 hover:bg-gray-800 hover:text-white' 
                     : 'text-gray-700 hover:bg-algorito-50 hover:text-algorito-600'
               }`}
-              onClick={closeMenu}
             >
               {item.name}
             </a>

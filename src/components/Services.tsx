@@ -22,7 +22,7 @@ const Services: React.FC = () => {
       id: 1,
       title: t('workflowAutomation'),
       description: t('workflowAutomationDesc'),
-      icon: <Workflow size={48} className="text-algorito-600" />,
+      icon: <Workflow size={44} className="text-algorito-600" />,
       modalDescription: language === 'en' 
         ? "Our workflow automation services use leading tools like Make.com and n8n to eliminate repetitive tasks and streamline your business processes."
         : "Nuestros servicios de automatización de flujos de trabajo utilizan herramientas líderes como Make.com y n8n para eliminar tareas repetitivas y optimizar sus procesos empresariales.",
@@ -151,14 +151,14 @@ const Services: React.FC = () => {
           {services.map((service) => (
             <div 
               key={service.id} 
-              className={`group rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl ${
+              className={`group rounded-md overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${
                 theme === 'dark' 
                   ? 'bg-gray-700 border border-gray-600' 
                   : 'bg-white shadow-lg hover:shadow-algorito-100/50'
               }`}
             >
               <div className="p-8">
-                <div className={`mb-6 inline-flex items-center justify-center w-16 h-16 rounded-full ${
+                <div className={`mb-6 inline-flex items-center justify-center w-14 h-14 rounded-md ${
                   theme === 'dark' ? 'bg-gray-800' : 'bg-algorito-50'
                 } group-hover:bg-algorito-100 transition-colors duration-300`}>
                   {service.icon}

@@ -1,6 +1,6 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -36,7 +36,7 @@
     --input: 214 32% 91%;
     --ring: 222 84% 5%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem; /* Reduced border radius for more edgy look */
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5% 26%;
@@ -94,7 +94,7 @@
   }
 
   html {
-    @apply scroll-smooth;
+    @apply scroll-smooth scroll-pt-20; /* Added scroll-pt-20 to fix the navigation anchor positioning */
   }
 
   body {
@@ -106,7 +106,7 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-nunito font-bold;
+    @apply font-nunito font-bold tracking-tight; /* Added tracking-tight for a more modern, condensed look */
   }
 
   h1 {
@@ -132,11 +132,11 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-gradient-to-r from-algorito-600 to-algorito-700 hover:from-algorito-700 hover:to-algorito-800 text-white font-semibold py-3 px-8 rounded-lg shadow-lg shadow-algorito-500/20 transition-all duration-300 ease-in-out;
+    @apply bg-gradient-to-r from-algorito-600 to-algorito-700 hover:from-algorito-700 hover:to-algorito-800 text-white font-semibold py-3 px-8 rounded-md shadow-lg shadow-algorito-500/20 transition-all duration-300 ease-in-out;
   }
 
   .btn-secondary {
-    @apply bg-white text-algorito-700 border border-algorito-500 hover:bg-algorito-50 font-semibold py-3 px-8 rounded-lg shadow-md transition-all duration-300 ease-in-out dark:bg-gray-800 dark:text-algorito-400 dark:border-algorito-700 dark:hover:bg-gray-700;
+    @apply bg-white text-algorito-700 border border-algorito-500 hover:bg-algorito-50 font-semibold py-3 px-8 rounded-md shadow-md transition-all duration-300 ease-in-out dark:bg-gray-800 dark:text-algorito-400 dark:border-algorito-700 dark:hover:bg-gray-700;
   }
 
   .section-title {
@@ -144,15 +144,15 @@
   }
 
   .section-title::after {
-    @apply content-[''] absolute bottom-[-15px] left-1/2 transform -translate-x-1/2 w-24 h-1.5 bg-algorito-500 rounded-full;
+    @apply content-[''] absolute bottom-[-15px] left-1/2 transform -translate-x-1/2 w-24 h-1 bg-algorito-500 rounded-sm;
   }
 
   .card {
-    @apply bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden dark:bg-gray-800 dark:border dark:border-gray-700;
+    @apply bg-white rounded-md shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden dark:bg-gray-800 dark:border dark:border-gray-700;
   }
 
   .glass-card {
-    @apply bg-white/90 backdrop-blur-md rounded-xl shadow-lg border border-white/20 dark:bg-gray-900/90 dark:border-gray-800/20;
+    @apply bg-white/90 backdrop-blur-md rounded-md shadow-lg border border-white/20 dark:bg-gray-900/90 dark:border-gray-800/20;
   }
 
   .animate-float {
