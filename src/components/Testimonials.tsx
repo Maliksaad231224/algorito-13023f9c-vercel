@@ -22,7 +22,7 @@ const Testimonials: React.FC = () => {
         en: 'Algorito transformed our daily tasks at MG7 Luxury Agency. By refining our CRM and automating provider collaboration, we cut manual work by 65%, letting us concentrate on premium campaigns that wow our exclusive clientele.',
         es: 'Algorito transformó nuestras tareas diarias en MG7 Luxury Agency. Al perfeccionar nuestro CRM y automatizar la colaboración con los proveedores, redujimos el trabajo manual en un 65 %, lo que nos permitió concentrarnos en campañas premium que cautivan a nuestra exclusiva clientela.'
       },
-      image: '/lovable-uploads/288fc1fa-984d-47dd-b972-552efa6ff4ee.png',
+      image: 'https://media.licdn.com/dms/image/v2/D4E03AQExIRsXQPywtg/profile-displayphoto-shrink_200_200/B4EZWkAsoCHMAg-/0/1742213401562?e=1749686400&v=beta&t=5rDmDqdMgsq9TfmTe_lAyBhDK6VG-6tJkY7vBGA8gkU',
     },
     {
       id: 2,
