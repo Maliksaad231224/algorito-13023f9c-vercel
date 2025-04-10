@@ -48,28 +48,30 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className={`${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-900'} text-white pt-16 pb-8`}>
+    <footer className="bg-gray-900 text-white pt-20 pb-8">
       <div className="container mx-auto px-4">
         {/* Footer Top */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
           {/* Company Info */}
           <div>
-            <img
-              src="/lovable-uploads/bdec6477-9f00-4878-a0a5-f69bada51441.png"
-              alt="Algorito Logo"
-              className="h-14 mb-4"
-            />
-            <p className="text-gray-400 mb-6">
+            <div className="mb-6">
+              <img
+                src="/lovable-uploads/bdec6477-9f00-4878-a0a5-f69bada51441.png"
+                alt="Algorito Logo"
+                className="h-14"
+              />
+            </div>
+            <p className="text-gray-400 mb-8 max-w-lg">
               {language === 'en'
                 ? 'Revolutionizing workflows with AI automation. Let technology handle repetitive tasks while you focus on growth.'
                 : 'Revolucionando flujos de trabajo con automatización IA. Deja que la tecnología maneje tareas repetitivas mientras te enfocas en el crecimiento.'}
             </p>
             
             {/* Contact Info */}
-            <div className="space-y-3 mb-6">
+            <div className="space-y-4 mb-8">
               {contactInfo.map((item, index) => (
                 <div key={index} className="flex items-center">
-                  <span className="mr-2">{item.icon}</span>
+                  <span className="mr-3 bg-gray-800 p-2 rounded-full">{item.icon}</span>
                   {item.href ? (
                     <a href={item.href} className="text-gray-400 hover:text-white transition-colors duration-200">
                       {item.text}
@@ -87,7 +89,7 @@ const Footer: React.FC = () => {
                 <a
                   key={index}
                   href={link.href}
-                  className="bg-gray-800 p-2 rounded-full hover:bg-algorito-600 transition-colors duration-300"
+                  className="bg-gray-800 p-3 rounded-full hover:bg-algorito-600 transition-colors duration-300"
                   aria-label={link.label}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -100,16 +102,17 @@ const Footer: React.FC = () => {
           
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl font-bold mb-6 relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-12 after:h-1 after:bg-algorito-500">
+            <h3 className="text-xl font-bold mb-8 relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-16 after:h-1 after:bg-algorito-500">
               {language === 'en' ? 'Quick Links' : 'Enlaces Rápidos'}
             </h3>
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {navLinks.map((link, index) => (
                 <li key={index}>
                   <a 
                     href={link.href} 
-                    className="text-gray-400 hover:text-white transition-colors duration-200"
+                    className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center"
                   >
+                    <span className="mr-2 text-xs">›</span>
                     {link.name}
                   </a>
                 </li>

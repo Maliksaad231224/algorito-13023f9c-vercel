@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
-import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
 
 const Testimonials: React.FC = () => {
   const { t, language } = useLanguage();
@@ -68,10 +68,10 @@ const Testimonials: React.FC = () => {
   };
 
   return (
-    <section id="reviews" className={`py-20 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gradient-to-b from-white to-gray-50'}`}>
+    <section id="reviews" className={`py-24 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gradient-to-b from-white to-slate-50'}`}>
       <div className="container mx-auto px-4">
         <h2 className={`section-title ${theme === 'dark' ? 'text-white' : ''}`}>
-          {language === 'en' ? 'Reviews' : 'Reseñas'}
+          {t('reviewsTitle')}
         </h2>
         
         <div className="relative mt-12 max-w-4xl mx-auto">
@@ -80,44 +80,60 @@ const Testimonials: React.FC = () => {
             onClick={prevTestimonial}
             className={`absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 ${
               theme === 'dark' ? 'bg-gray-800' : 'bg-white'
-            } p-2 rounded-full shadow-md ${
+            } p-3 rounded-full shadow-lg hover:shadow-xl ${
               theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-algorito-50'
-            } z-10`}
+            } z-10 transition-all`}
             aria-label="Previous testimonial"
           >
-            <ChevronLeft className="w-6 h-6 text-algorito-600" />
+            <ChevronLeft className="w-5 h-5 text-algorito-600" />
           </button>
           
           <button 
             onClick={nextTestimonial}
             className={`absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 ${
               theme === 'dark' ? 'bg-gray-800' : 'bg-white'
-            } p-2 rounded-full shadow-md ${
+            } p-3 rounded-full shadow-lg hover:shadow-xl ${
               theme === 'dark' ? 'hover:bg-gray-700' : 'hover:bg-algorito-50'
-            } z-10`}
+            } z-10 transition-all`}
             aria-label="Next testimonial"
           >
-            <ChevronRight className="w-6 h-6 text-algorito-600" />
+            <ChevronRight className="w-5 h-5 text-algorito-600" />
           </button>
           
           {/* Testimonial Card */}
           <div className={`${
-            theme === 'dark' ? 'bg-gray-800 border border-gray-700' : 'glass-card'
-          } p-8 md:p-10`}>
-            <div className="flex flex-col md:flex-row items-center">
-              <div className="md:w-1/4 mb-6 md:mb-0 flex justify-center">
-                <img 
-                  src={testimonials[currentIndex].image} 
-                  alt={testimonials[currentIndex].name} 
-                  className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg"
-                />
+            theme === 'dark' 
+              ? 'bg-gray-800 border border-gray-700' 
+              : 'bg-white shadow-xl'
+          } p-10 md:p-12 rounded-xl`}>
+            <div className="absolute -top-6 left-10">
+              <div className={`w-12 h-12 flex items-center justify-center rounded-full ${
+                theme === 'dark' ? 'bg-gray-700' : 'bg-algorito-100'
+              }`}>
+                <Quote className="w-6 h-6 text-algorito-600" />
               </div>
+            </div>
+            
+            <div className="flex flex-col md:flex-row items-center">
+              <div className="md:w-1/4 mb-8 md:mb-0 flex justify-center">
+                <div className="relative">
+                  <div className={`absolute -inset-0.5 rounded-full blur-sm ${
+                    theme === 'dark' ? 'bg-algorito-600/30' : 'bg-algorito-200/50'
+                  }`}></div>
+                  <img 
+                    src={testimonials[currentIndex].image} 
+                    alt={testimonials[currentIndex].name} 
+                    className="w-24 h-24 rounded-full object-cover border-4 border-white dark:border-gray-800 relative z-10"
+                  />
+                </div>
+              </div>
+              
               <div className="md:w-3/4 md:pl-8">
-                <div className="flex mb-2">
+                <div className="flex mb-3">
                   {renderStars(testimonials[currentIndex].rating)}
                 </div>
-                <blockquote className={`text-lg italic mb-4 ${
-                  theme === 'dark' ? 'text-gray-300' : ''
+                <blockquote className={`text-lg italic mb-6 ${
+                  theme === 'dark' ? 'text-gray-200' : 'text-gray-700'
                 }`}>
                   "{testimonials[currentIndex].text[language as 'en' | 'es']}"
                 </blockquote>
@@ -139,8 +155,10 @@ const Testimonials: React.FC = () => {
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`w-3 h-3 rounded-full ${
-                  currentIndex === index ? 'bg-algorito-600' : theme === 'dark' ? 'bg-gray-600' : 'bg-gray-300'
+                className={`w-3 h-3 rounded-full transition-all ${
+                  currentIndex === index 
+                    ? 'w-8 bg-algorito-600' 
+                    : theme === 'dark' ? 'bg-gray-600' : 'bg-gray-300'
                 }`}
                 aria-label={`Go to testimonial ${index + 1}`}
               />

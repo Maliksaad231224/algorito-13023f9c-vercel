@@ -7,7 +7,8 @@ import {
   Globe, 
   MessageSquare, 
   Mail, 
-  Database
+  Database,
+  ArrowRight
 } from 'lucide-react';
 import ServiceModal from './ServiceModal';
 
@@ -102,7 +103,7 @@ const Services: React.FC = () => {
   };
 
   return (
-    <section id="services" className={`py-20 ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50'}`}>
+    <section id="services" className={`py-24 ${theme === 'dark' ? 'bg-gray-800' : 'bg-slate-50'}`}>
       <div className="container mx-auto px-4">
         <h2 className="section-title">{t('ourServices')}</h2>
         
@@ -110,19 +111,28 @@ const Services: React.FC = () => {
           {services.map((service) => (
             <div 
               key={service.id} 
-              className={`card p-6 flex flex-col items-center text-center transition-all duration-300 hover:translate-y-[-5px] ${
-                theme === 'dark' ? 'bg-gray-700 border-gray-600' : ''
+              className={`group rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl ${
+                theme === 'dark' 
+                  ? 'bg-gray-700 border border-gray-600' 
+                  : 'bg-white shadow-lg hover:shadow-algorito-100/50'
               }`}
             >
-              <div className="mb-4">{service.icon}</div>
-              <h3 className={`text-xl font-bold mb-3 ${theme === 'dark' ? 'text-white' : ''}`}>{service.title}</h3>
-              <p className={`mb-4 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>{service.description}</p>
-              <button 
-                onClick={() => openModal(service.id)}
-                className="mt-auto text-algorito-600 font-semibold hover:text-algorito-800 transition-colors"
-              >
-                {t('learnMore')} →
-              </button>
+              <div className="p-8">
+                <div className={`mb-6 inline-flex items-center justify-center w-16 h-16 rounded-full ${
+                  theme === 'dark' ? 'bg-gray-800' : 'bg-algorito-50'
+                } group-hover:bg-algorito-100 transition-colors duration-300`}>
+                  {service.icon}
+                </div>
+                <h3 className={`text-xl font-bold mb-4 ${theme === 'dark' ? 'text-white' : ''}`}>{service.title}</h3>
+                <p className={`mb-6 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>{service.description}</p>
+                <button 
+                  onClick={() => openModal(service.id)}
+                  className="inline-flex items-center text-algorito-600 font-semibold hover:text-algorito-800 transition-colors group"
+                >
+                  {t('learnMore')} 
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
             </div>
           ))}
         </div>

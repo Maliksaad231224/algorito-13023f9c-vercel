@@ -50,7 +50,9 @@ const Navbar: React.FC = () => {
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         isScrolled 
-          ? (theme === 'dark' ? 'bg-gray-900 shadow-md py-2' : 'bg-white shadow-md py-2') 
+          ? (theme === 'dark' 
+              ? 'bg-gray-900/95 backdrop-blur-sm shadow-lg py-2' 
+              : 'bg-white/95 backdrop-blur-sm shadow-lg py-2') 
           : 'bg-transparent py-4'
       }`}
     >
@@ -65,23 +67,8 @@ const Navbar: React.FC = () => {
         </a>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-1">
-          <LanguageToggle />
-          
-          {/* Theme Toggle Button */}
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-algorito-600 dark:hover:text-algorito-400 focus:outline-none transition-colors"
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? (
-              <Sun size={20} className="text-yellow-400" />
-            ) : (
-              <Moon size={20} />
-            )}
-          </button>
-          
-          {navItems.map((item) => (
+        <div className="hidden md:flex items-center gap-1">
+          {navItems.map((item, index) => (
             <a
               key={item.href}
               href={item.href}
@@ -94,6 +81,23 @@ const Navbar: React.FC = () => {
               {item.name}
             </a>
           ))}
+          
+          <div className="flex items-center ml-4 border-l border-gray-200 dark:border-gray-700 pl-4">
+            <LanguageToggle />
+            
+            {/* Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-algorito-600 dark:hover:text-algorito-400 focus:outline-none transition-colors"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? (
+                <Sun size={20} className="text-yellow-400" />
+              ) : (
+                <Moon size={20} />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu Button */}
@@ -124,20 +128,20 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Navigation */}
       <div
-        className={`md:hidden ${
-          isMenuOpen ? 'block' : 'hidden'
-        } ${theme === 'dark' ? 'bg-gray-800' : 'bg-white'} shadow-md`}
+        className={`md:hidden absolute top-full left-0 w-full transform transition-transform duration-300 ease-in-out ${
+          isMenuOpen ? 'translate-y-0 opacity-100' : '-translate-y-10 opacity-0 pointer-events-none'
+        } ${theme === 'dark' ? 'bg-gray-900/95 backdrop-blur-sm' : 'bg-white/95 backdrop-blur-sm'} shadow-lg`}
       >
-        <div className="px-2 pt-2 pb-3 space-y-1">
+        <div className="px-4 py-3 space-y-1 max-h-[80vh] overflow-auto">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className={`block px-3 py-2 rounded-md text-base font-medium ${
+              className={`block px-4 py-3 rounded-lg text-base font-medium ${
                 item.name === t('bookCall')
                   ? 'bg-algorito-600 text-white'
                   : theme === 'dark' 
-                    ? 'text-gray-300 hover:bg-gray-700 hover:text-white' 
+                    ? 'text-gray-300 hover:bg-gray-800 hover:text-white' 
                     : 'text-gray-700 hover:bg-algorito-50 hover:text-algorito-600'
               }`}
               onClick={closeMenu}

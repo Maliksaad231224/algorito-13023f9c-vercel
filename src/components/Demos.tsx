@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Play } from 'lucide-react';
+import { Play, ExternalLink } from 'lucide-react';
 
 const Demos: React.FC = () => {
   const { t, language } = useLanguage();
@@ -29,36 +29,48 @@ const Demos: React.FC = () => {
   ];
 
   return (
-    <section id="demos" className="bg-gray-900 py-20 text-white">
+    <section id="demos" className="bg-gray-900 py-24 text-white">
       <div className="container mx-auto px-4">
         <h2 className="section-title text-white">{t('demosTitle')}</h2>
-        <div className="section-title text-white after:bg-white"></div>
         
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {demoVideos.map((demo) => (
-            <div key={demo.id} className="group relative overflow-hidden rounded-xl">
+            <div key={demo.id} className="group relative overflow-hidden rounded-xl shadow-lg">
+              {/* Overlay gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70 z-10"></div>
+              
+              {/* Thumbnail image */}
               <img
                 src={demo.thumbnail}
                 alt={demo.title}
-                className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+                className="w-full h-72 object-cover transition-transform duration-700 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <button className="bg-algorito-600 hover:bg-algorito-700 text-white p-4 rounded-full transition-colors duration-300">
+              
+              {/* Play button overlay */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                <button className="bg-algorito-600 hover:bg-algorito-700 text-white p-4 rounded-full transition-colors duration-300 shadow-lg transform group-hover:scale-110 transition-transform">
                   <Play className="h-8 w-8" />
                 </button>
               </div>
-              <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
-                <h3 className="text-lg font-semibold mb-1">{demo.title}</h3>
-                <span className="text-sm text-gray-300">{demo.duration}</span>
+              
+              {/* Info overlay */}
+              <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
+                <h3 className="text-lg font-semibold mb-2 group-hover:text-algorito-300 transition-colors">{demo.title}</h3>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-300 flex items-center">
+                    <Play className="h-3 w-3 mr-1" /> {demo.duration}
+                  </span>
+                </div>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-12 text-center">
-          <button className="btn-primary">
+        <div className="mt-16 text-center">
+          <a href="#booking" className="btn-primary inline-flex items-center gap-2 group">
             {t('watchDemo')}
-          </button>
+            <ExternalLink className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          </a>
         </div>
       </div>
     </section>
