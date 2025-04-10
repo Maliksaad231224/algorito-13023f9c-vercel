@@ -3,6 +3,7 @@ import React from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { MapPin, Mail, CalendarCheck } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
 const About: React.FC = () => {
   const { t, language } = useLanguage();
@@ -14,6 +15,35 @@ const About: React.FC = () => {
         <div className="max-w-3xl mx-auto text-center mb-12">
           <h2 className="text-3xl font-bold mb-6">{t('aboutTitle')}</h2>
           <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mb-8`}>{t('aboutDesc')}</p>
+        </div>
+        
+        {/* Founder section */}
+        <div className="max-w-5xl mx-auto mb-16">
+          <Card className={`${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white'} overflow-hidden`}>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="flex justify-center items-center p-6">
+                <div className="relative max-w-md rounded-lg overflow-hidden">
+                  <div className={`absolute -inset-0.5 rounded-lg blur opacity-30 ${theme === 'dark' ? 'bg-algorito-400' : 'bg-algorito-200'}`}></div>
+                  <img 
+                    src="/lovable-uploads/e00c9938-5c81-4ade-bdf6-4e8064302e9e.png"
+                    alt="Hans van Praag - Founder of Algorito" 
+                    className="relative z-10 rounded-lg w-full h-auto object-cover"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col justify-center p-6 md:p-8">
+                <h3 className="text-2xl font-bold mb-2">Hans van Praag</h3>
+                <p className="text-lg text-algorito-600 font-medium mb-4">
+                  {language === 'en' ? 'Founder of Algorito' : 'Fundador de Algorito'}
+                </p>
+                <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mb-4`}>
+                  {language === 'en' 
+                    ? 'Industrial Product Designer with experience in project development and assembly chain optimization. Specialized in process automation and prompt engineering.'
+                    : 'Diseño de Producto industrial, con experiencia en desarrollo de proyectos y optimización de cadenas de motaje. Especializado en la automatización de procesos e ingeniería de prompts.'}
+                </p>
+              </div>
+            </div>
+          </Card>
         </div>
         
         <div className="max-w-5xl mx-auto">

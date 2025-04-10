@@ -105,6 +105,8 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       termsOfService: 'Terms of Service',
       privacyPolicy: 'Privacy Policy',
       keyFeatures: 'Key Features',
+      founderTitle: 'Founder of Algorito',
+      founderDescription: 'Industrial Product Designer with experience in project development and assembly chain optimization. Specialized in process automation and prompt engineering.',
     },
     es: {
       home: 'Inicio',
@@ -179,6 +181,8 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       termsOfService: 'Términos de Servicio',
       privacyPolicy: 'Política de Privacidad',
       keyFeatures: 'Características Principales',
+      founderTitle: 'Fundador de Algorito',
+      founderDescription: 'Diseño de Producto industrial, con experiencia en desarrollo de proyectos y optimización de cadenas de motaje. Especializado en la automatización de procesos e ingeniería de prompts.',
     }
   };
 
