@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 const Testimonials: React.FC = () => {
   const { t, language } = useLanguage();
@@ -15,12 +16,13 @@ const Testimonials: React.FC = () => {
       id: 1,
       name: 'Martí González',
       company: 'MG7 Luxury Agency',
+      companyUrl: 'https://mg7agency.com/',
       rating: 5,
       text: {
         en: 'Algorito transformed our daily tasks at MG7 Luxury Agency. By refining our CRM and automating provider collaboration, we cut manual work by 65%, letting us concentrate on premium campaigns that wow our exclusive clientele.',
         es: 'Algorito transformó nuestras tareas diarias en MG7 Luxury Agency. Al perfeccionar nuestro CRM y automatizar la colaboración con los proveedores, redujimos el trabajo manual en un 65 %, lo que nos permitió concentrarnos en campañas premium que cautivan a nuestra exclusiva clientela.'
       },
-      image: 'https://media.licdn.com/dms/image/v2/D4E03AQExIRsXQPywtg/profile-displayphoto-shrink_100_100/B4EZWkAsoCHMAc-/0/1742213401612?e=1749686400&v=beta&t=suKR1tsRTE4fLP0ROEshjq_Gry2R5l26MaDiQE5Pq-A',
+      image: '/lovable-uploads/288fc1fa-984d-47dd-b972-552efa6ff4ee.png',
     },
     {
       id: 2,
@@ -141,9 +143,20 @@ const Testimonials: React.FC = () => {
                   <p className={`font-bold text-lg ${
                     theme === 'dark' ? 'text-white' : ''
                   }`}>{testimonials[currentIndex].name}</p>
-                  <p className={`${
-                    theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
-                  }`}>{testimonials[currentIndex].company}</p>
+                  {testimonials[currentIndex].companyUrl ? (
+                    <a 
+                      href={testimonials[currentIndex].companyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-algorito-600 hover:text-algorito-700 transition-colors"
+                    >
+                      {testimonials[currentIndex].company}
+                    </a>
+                  ) : (
+                    <p className={`${
+                      theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+                    }`}>{testimonials[currentIndex].company}</p>
+                  )}
                 </div>
               </div>
             </div>
