@@ -66,9 +66,12 @@ const ChatWidget = () => {
         throw new Error('Failed to send message');
       }
 
-      // Add a temporary response
+      // Parse the response and display it in the chat
+      const responseData = await response.json();
+      
+      // Add the bot's response to the chat
       setMessages(prev => [...prev, { 
-        text: "Thanks for your message! We'll get back to you soon.", 
+        text: responseData.output || "Sorry, I couldn't process your request.", 
         isUser: false 
       }]);
     } catch (error) {
@@ -78,6 +81,12 @@ const ChatWidget = () => {
         description: 'Failed to send message. Please try again.',
         variant: 'destructive',
       });
+      
+      // Add an error message in the chat
+      setMessages(prev => [...prev, { 
+        text: "Sorry, there was an error processing your message. Please try again.", 
+        isUser: false 
+      }]);
     } finally {
       setIsLoading(false);
     }
@@ -159,6 +168,7 @@ const ChatWidget = () => {
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={handleKeyDown}
               rows={1}
+              disabled={isLoading}
             />
             <button
               className="chat-widget-send-button"
