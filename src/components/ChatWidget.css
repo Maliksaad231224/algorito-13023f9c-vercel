@@ -1,29 +1,201 @@
 
-/* Ensure the chat widget input is always usable */
+/* Chat Widget Button */
+.chat-widget-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #00376f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: none;
+  z-index: 9999;
+  transition: transform 0.3s ease;
+}
+
+.chat-widget-button:hover {
+  transform: scale(1.05);
+}
+
+.chat-button-logo {
+  width: 35px;
+  height: 35px;
+  object-fit: contain;
+}
+
+/* Chat Container */
 .chat-widget-container {
-  z-index: 9999 !important;
+  position: fixed;
+  bottom: 90px;
+  right: 20px;
+  width: 350px;
+  height: 450px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 9999;
 }
 
+/* Dark mode support */
+.dark .chat-widget-container {
+  background-color: #1e293b;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Header */
+.chat-widget-header {
+  padding: 15px;
+  background-color: #00376f;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-widget-header-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chat-header-logo {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+}
+
+.chat-widget-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.chat-widget-subtitle {
+  font-size: 12px;
+  margin: 0;
+  opacity: 0.8;
+}
+
+.chat-widget-close-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.chat-widget-close-button:hover {
+  opacity: 0.8;
+}
+
+/* Messages */
 .chat-widget-messages {
-  overflow-y: auto !important;
+  flex-grow: 1;
+  padding: 15px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
+.chat-widget-welcome {
+  text-align: center;
+  padding: 20px 0;
+  color: #666;
+}
+
+.dark .chat-widget-welcome {
+  color: #ccc;
+}
+
+.chat-widget-message {
+  padding: 10px 12px;
+  border-radius: 10px;
+  max-width: 80%;
+  word-break: break-word;
+}
+
+.chat-widget-user-message {
+  background-color: #00376f;
+  color: white;
+  align-self: flex-end;
+}
+
+.chat-widget-bot-message {
+  background-color: #f0f0f0;
+  color: #333;
+  align-self: flex-start;
+}
+
+.dark .chat-widget-bot-message {
+  background-color: #334155;
+  color: white;
+}
+
+/* Input area */
 .chat-widget-input-container {
-  display: flex !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  pointer-events: auto !important;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dark .chat-widget-input-container {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .chat-widget-input {
-  width: 100% !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  pointer-events: auto !important;
+  flex-grow: 1;
+  resize: none;
+  max-height: 100px;
+  padding: 8px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+}
+
+.dark .chat-widget-input {
+  background-color: #334155;
+  color: white;
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 .chat-widget-send-button {
-  visibility: visible !important;
-  opacity: 1 !important;
-  pointer-events: auto !important;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #00376f;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.chat-widget-send-button:hover {
+  background-color: #002a54;
+}
+
+.chat-widget-send-button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.dark .chat-widget-send-button:disabled {
+  background-color: #4b5563;
 }

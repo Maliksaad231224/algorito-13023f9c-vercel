@@ -1,3 +1,4 @@
+
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -10,17 +11,10 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   const handleSendMessage = () => {
+    // Find the chat widget button and click it to open the chat
     const chatButton = document.querySelector('.chat-widget-button');
     if (chatButton instanceof HTMLElement) {
       chatButton.click();
-      
-      // Force focus on the input field after a delay
-      setTimeout(() => {
-        const chatInput = document.querySelector('.chat-widget-input');
-        if (chatInput instanceof HTMLElement) {
-          chatInput.focus();
-        }
-      }, 500);
     }
   };
 
