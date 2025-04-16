@@ -9,6 +9,8 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ChatWidget from "./components/ChatWidget";
+import "./App.css";
+import "./components/ChatWidget.css"; // Import the custom CSS for chat widget
 
 const queryClient = new QueryClient();
 

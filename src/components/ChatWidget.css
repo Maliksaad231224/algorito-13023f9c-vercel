@@ -1,0 +1,29 @@
+
+/* Ensure the chat widget input is always usable */
+.chat-widget-container {
+  z-index: 9999 !important;
+}
+
+.chat-widget-messages {
+  overflow-y: auto !important;
+}
+
+.chat-widget-input-container {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.chat-widget-input {
+  width: 100% !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.chat-widget-send-button {
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}

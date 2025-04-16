@@ -1,4 +1,3 @@
-
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import LanguageToggle from '@/components/LanguageToggle';
@@ -9,6 +8,21 @@ const Footer = () => {
   const { t } = useLanguage();
   const { theme } = useTheme();
   const year = new Date().getFullYear();
+
+  const handleSendMessage = () => {
+    const chatButton = document.querySelector('.chat-widget-button');
+    if (chatButton instanceof HTMLElement) {
+      chatButton.click();
+      
+      // Force focus on the input field after a delay
+      setTimeout(() => {
+        const chatInput = document.querySelector('.chat-widget-input');
+        if (chatInput instanceof HTMLElement) {
+          chatInput.focus();
+        }
+      }, 500);
+    }
+  };
 
   return (
     <footer className="bg-slate-100 dark:bg-gray-900 py-12">
@@ -59,8 +73,9 @@ const Footer = () => {
               <p className="text-slate-600 dark:text-slate-400">info@algorito.net</p>
             </div>
             <Button 
-              className="flex items-center space-x-2 send-message-btn"
+              className="flex items-center space-x-2"
               variant="default"
+              onClick={handleSendMessage}
             >
               <Mail className="h-4 w-4" />
               <span>{t('sendMessage')}</span>

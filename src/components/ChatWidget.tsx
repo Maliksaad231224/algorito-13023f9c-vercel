@@ -51,7 +51,58 @@ const ChatWidget = () => {
     widgetScript.onload = () => {
       console.log('Chat widget script loaded successfully');
       setIsLoaded(true);
+      
+      // Add CSS to ensure chat input is usable
+      const chatWidgetStyle = document.createElement('style');
+      chatWidgetStyle.id = 'chat-widget-custom-style';
+      chatWidgetStyle.textContent = `
+        .chat-widget-container {
+          z-index: 9999 !important;
+        }
+        .chat-widget-input-container {
+          display: flex !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+        }
+        .chat-widget-input {
+          width: 100% !important;
+          visibility: visible !important;
+          opacity: 1 !important;
+          pointer-events: auto !important;
+        }
+        .chat-widget-send-button {
+          visibility: visible !important;
+          opacity: 1 !important;
+          pointer-events: auto !important;
+        }
+      `;
+      document.head.appendChild(chatWidgetStyle);
+      
+      // Ensure message buttons trigger the chat widget correctly
+      setTimeout(() => {
+        const messageButtons = document.querySelectorAll('.send-message-btn');
+        messageButtons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const chatWidgetBtn = document.querySelector('.chat-widget-button');
+            if (chatWidgetBtn instanceof HTMLElement) {
+              chatWidgetBtn.click();
+              
+              // Force the input to be enabled after a short delay
+              setTimeout(() => {
+                const chatInput = document.querySelector('.chat-widget-input');
+                if (chatInput instanceof HTMLElement) {
+                  chatInput.style.pointerEvents = 'auto';
+                  chatInput.style.visibility = 'visible';
+                  chatInput.style.opacity = '1';
+                  chatInput.focus();
+                }
+              }, 500);
+            }
+          });
+        });
+      }, 1000);
     };
+    
     widgetScript.onerror = () => {
       console.error('Failed to load chat widget script');
       toast({
@@ -74,7 +125,7 @@ const ChatWidget = () => {
       }
     });
 
-    // Remove any existing scripts
+    // Remove any existing scripts and styles
     if (configRef.current && configRef.current.parentNode) {
       configRef.current.parentNode.removeChild(configRef.current);
     }
@@ -85,6 +136,7 @@ const ChatWidget = () => {
     // Also check for any other scripts with these IDs
     const oldConfig = document.getElementById('chat-widget-config');
     const oldScript = document.getElementById('chat-widget-script');
+    const oldStyle = document.getElementById('chat-widget-custom-style');
     
     if (oldConfig && oldConfig.parentNode) {
       oldConfig.parentNode.removeChild(oldConfig);
@@ -93,41 +145,41 @@ const ChatWidget = () => {
     if (oldScript && oldScript.parentNode) {
       oldScript.parentNode.removeChild(oldScript);
     }
+    
+    if (oldStyle && oldStyle.parentNode) {
+      oldStyle.parentNode.removeChild(oldStyle);
+    }
   };
 
   // Initial load
   useEffect(() => {
     initializeWidget();
     
-    // Add custom click handler for the "Send us a message" button
-    const handleMessageButtons = () => {
-      const messageButtons = document.querySelectorAll('.send-message-btn');
-      messageButtons.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const chatButton = document.querySelector('.chat-widget-button');
-          if (chatButton) {
-            // @ts-ignore
-            chatButton.click();
-          }
-        });
-      });
-    };
-
-    // Wait a bit for the DOM to be ready
-    setTimeout(handleMessageButtons, 1000);
-
     return () => {
       cleanupScripts();
     };
   }, []);
 
-  // Update when theme or language changes
+  // Monitor widget functionality
   useEffect(() => {
     if (isLoaded) {
-      // Completely reinitialize the widget when theme or language changes
-      initializeWidget();
+      const checkInterval = setInterval(() => {
+        const chatInput = document.querySelector('.chat-widget-input');
+        const chatSendButton = document.querySelector('.chat-widget-send-button');
+        
+        if (chatInput instanceof HTMLElement && chatSendButton instanceof HTMLElement) {
+          chatInput.style.pointerEvents = 'auto';
+          chatInput.style.visibility = 'visible';
+          chatInput.style.opacity = '1';
+          chatSendButton.style.pointerEvents = 'auto';
+          chatSendButton.style.visibility = 'visible';
+          chatSendButton.style.opacity = '1';
+        }
+      }, 2000); // Check every 2 seconds
+      
+      return () => clearInterval(checkInterval);
     }
-  }, [theme, language, isLoaded]);
+  }, [isLoaded]);
 
   return null;
 };
