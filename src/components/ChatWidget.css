@@ -1,4 +1,3 @@
-
 /* Chat Widget Button */
 .chat-widget-button {
   position: fixed;
@@ -125,6 +124,8 @@
   border-radius: 10px;
   max-width: 80%;
   word-break: break-word;
+  white-space: pre-line;
+  line-height: 1.5;
 }
 
 .chat-widget-user-message {

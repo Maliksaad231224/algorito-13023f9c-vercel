@@ -99,6 +99,17 @@ const ChatWidget = () => {
     }
   };
 
+  // Function to format message text with line breaks
+  const formatMessageText = (text: string) => {
+    // Split the text by newline characters and join with <br> elements
+    return text.split('\n').map((line, index) => (
+      <React.Fragment key={index}>
+        {line}
+        {index < text.split('\n').length - 1 && <br />}
+      </React.Fragment>
+    ));
+  };
+
   return (
     <>
       {/* Chat button */}
@@ -152,7 +163,7 @@ const ChatWidget = () => {
                 key={index} 
                 className={`chat-widget-message ${msg.isUser ? 'chat-widget-user-message' : 'chat-widget-bot-message'}`}
               >
-                {msg.text}
+                {formatMessageText(msg.text)}
               </div>
             ))}
             <div ref={messagesEndRef} />
