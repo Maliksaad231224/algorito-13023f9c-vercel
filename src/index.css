@@ -175,6 +175,7 @@
 .chat-widget-button {
   cursor: pointer !important;
   z-index: 999 !important;
+  background-color: #00376f !important;
 }
 
 .chat-widget-container {
@@ -183,18 +184,12 @@
   transition: all 0.3s ease !important;
 }
 
-.chat-widget-send-message-btn {
-  cursor: pointer !important;
-  background-color: var(--primary-color, #00376f) !important;
-  color: white !important;
-  border-radius: 0.5rem !important;
-  padding: 0.75rem 1.5rem !important;
-  font-weight: 600 !important;
-  transition: background-color 0.3s ease !important;
+.chat-widget-header {
+  background-color: #00376f !important;
 }
 
-.chat-widget-send-message-btn:hover {
-  opacity: 0.9 !important;
+.chat-widget-send-button {
+  background-color: #00376f !important;
 }
 
 .chat-widget-input {
@@ -202,7 +197,7 @@
   border-radius: 0.375rem !important;
   padding: 0.5rem 1rem !important;
   width: 100% !important;
-  margin-bottom: 0.5rem !important;
+  box-sizing: border-box !important;
 }
 
 /* Fix for dark mode input */
@@ -212,25 +207,40 @@
   border-color: rgba(255,255,255,0.1) !important;
 }
 
-/* Fix for dark mode message bubbles */
-.dark .chat-widget-bot-message {
-  background-color: #2d3748 !important;
-  color: white !important;
+/* Message bubbles */
+.chat-widget-messages {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
 }
 
 .chat-widget-message {
-  margin-bottom: 0.75rem !important;
-  padding: 0.75rem 1rem !important;
-  border-radius: 0.5rem !important;
+  padding: 10px 12px !important;
+  border-radius: 8px !important;
+  max-width: 80% !important;
+  margin-bottom: 8px !important;
 }
 
 .chat-widget-user-message {
-  background-color: var(--primary-color, #00376f) !important;
+  background-color: #00376f !important;
   color: white !important;
   align-self: flex-end !important;
+  margin-left: auto !important;
 }
 
 .chat-widget-bot-message {
   background-color: #f1f5f9 !important;
+  color: #333333 !important;
   align-self: flex-start !important;
+  margin-right: auto !important;
+}
+
+.dark .chat-widget-bot-message {
+  background-color: #1e293b !important;
+  color: white !important;
+}
+
+/* Send Message Button for Footer */
+.send-message-btn {
+  cursor: pointer;
 }

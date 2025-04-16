@@ -1,142 +1,92 @@
 
-import React from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { Linkedin, Instagram, Mail, MapPin } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
+import LanguageToggle from '@/components/LanguageToggle';
+import { Button } from '@/components/ui/button';
+import { Mail } from 'lucide-react';
 
-const Footer: React.FC = () => {
-  const { t, language } = useLanguage();
+const Footer = () => {
+  const { t } = useLanguage();
   const { theme } = useTheme();
-  
-  const currentYear = new Date().getFullYear();
-  
-  // Social media links
-  const socialLinks = [
-    { icon: <Linkedin className="h-5 w-5" />, href: '#', label: 'LinkedIn' },
-    { icon: <Instagram className="h-5 w-5" />, href: 'https://www.instagram.com/algoritoai/', label: 'Instagram' },
-    { icon: <Mail className="h-5 w-5" />, href: 'mailto:algoritoai@gmail.com', label: 'Email' },
-  ];
-
-  // Navigation links
-  const navLinks = [
-    { name: language === 'en' ? 'Home' : 'Inicio', href: '#home' },
-    { name: language === 'en' ? 'Services' : 'Servicios', href: '#services' },
-    { name: language === 'en' ? 'Use Cases' : 'Casos de Uso', href: '#use-cases' },
-    { name: language === 'en' ? 'Demos' : 'Demos', href: '#demos' },
-    { name: language === 'en' ? 'Reviews' : 'Reseñas', href: '#reviews' },
-    { name: language === 'en' ? 'Book a Call' : 'Agendar Cita', href: '#booking' },
-    { name: language === 'en' ? 'About' : 'Acerca de', href: '#about' },
-  ];
-
-  // Legal links
-  const legalLinks = [
-    { name: language === 'en' ? 'Terms of Service' : 'Términos de Servicio', href: '#' },
-    { name: language === 'en' ? 'Privacy Policy' : 'Política de Privacidad', href: '#' },
-  ];
-
-  // Contact info
-  const contactInfo = [
-    { 
-      icon: <MapPin className={`h-5 w-5 ${theme === 'light' ? 'text-algorito-600' : 'text-algorito-500'}`} />, 
-      text: language === 'en' ? 'Ibiza, Spain' : 'Ibiza, España'
-    },
-    { 
-      icon: <Mail className={`h-5 w-5 ${theme === 'light' ? 'text-algorito-600' : 'text-algorito-500'}`} />, 
-      text: 'algoritoai@gmail.com',
-      href: 'mailto:algoritoai@gmail.com'
-    },
-  ];
+  const year = new Date().getFullYear();
 
   return (
-    <footer className={`${theme === 'light' ? 'bg-white text-gray-800' : 'bg-gray-900 text-white'} pt-20 pb-8`}>
+    <footer className="bg-slate-100 dark:bg-gray-900 py-12">
       <div className="container mx-auto px-4">
-        {/* Footer Top */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
-          {/* Company Info */}
-          <div>
-            <div className="mb-6">
-              <img
-                src="/lovable-uploads/bdec6477-9f00-4878-a0a5-f69bada51441.png"
-                alt="Algorito Logo"
-                className="h-14"
-              />
-            </div>
-            <p className={`${theme === 'light' ? 'text-gray-600' : 'text-gray-400'} mb-8 max-w-lg`}>
-              {language === 'en'
-                ? 'Revolutionizing workflows with AI automation. Let technology handle repetitive tasks while you focus on growth.'
-                : 'Revolucionando flujos de trabajo con automatización IA. Deja que la tecnología maneje tareas repetitivas mientras te enfocas en el crecimiento.'}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="text-left">
+            <img 
+              src="/lovable-uploads/bdec6477-9f00-4878-a0a5-f69bada51441.png" 
+              alt="Algorito Logo" 
+              className="h-12 w-auto mb-4" 
+            />
+            <p className="text-slate-600 dark:text-slate-400 mb-4">
+              {t('aboutDesc')}
             </p>
-            
-            {/* Contact Info */}
-            <div className="space-y-4 mb-8">
-              {contactInfo.map((item, index) => (
-                <div key={index} className="flex items-center">
-                  <span className={`mr-3 ${theme === 'light' ? 'bg-gray-100' : 'bg-gray-800'} p-2 rounded-full`}>{item.icon}</span>
-                  {item.href ? (
-                    <a href={item.href} className={`${theme === 'light' ? 'text-gray-600 hover:text-gray-900' : 'text-gray-400 hover:text-white'} transition-colors duration-200`}>
-                      {item.text}
-                    </a>
-                  ) : (
-                    <span className={theme === 'light' ? 'text-gray-600' : 'text-gray-400'}>{item.text}</span>
-                  )}
-                </div>
-              ))}
-            </div>
-            
-            {/* Social Icons */}
-            <div className="flex space-x-4">
-              {socialLinks.map((link, index) => (
-                <a
-                  key={index}
-                  href={link.href}
-                  className={`${theme === 'light' ? 'bg-gray-100 hover:bg-algorito-100' : 'bg-gray-800 hover:bg-algorito-600'} p-3 rounded-full transition-colors duration-300`}
-                  aria-label={link.label}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {link.icon}
-                </a>
-              ))}
+            <div className="flex items-center space-x-4">
+              <a href="#" aria-label="Twitter">
+                <img 
+                  src="/lovable-uploads/49ccf7a5-024d-47f9-879d-bf893774dc62.png" 
+                  alt="Twitter" 
+                  className="h-6 w-6 transition-transform hover:scale-110" 
+                />
+              </a>
+              <a href="#" aria-label="Facebook">
+                <img 
+                  src="/lovable-uploads/57ded8d5-87c0-4446-845b-249acf04b6c7.png" 
+                  alt="Facebook" 
+                  className="h-6 w-6 transition-transform hover:scale-110" 
+                />
+              </a>
+              <a href="#" aria-label="LinkedIn">
+                <img 
+                  src="/lovable-uploads/c4e082dd-3b87-4e72-a439-33642d76afc2.png" 
+                  alt="LinkedIn" 
+                  className="h-6 w-6 transition-transform hover:scale-110" 
+                />
+              </a>
             </div>
           </div>
           
-          {/* Quick Links */}
-          <div>
-            <h3 className={`text-xl font-bold mb-8 relative pb-3 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-16 after:h-1 after:bg-algorito-500`}>
-              {language === 'en' ? 'Quick Links' : 'Enlaces Rápidos'}
-            </h3>
-            <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {navLinks.map((link, index) => (
-                <li key={index}>
-                  <a 
-                    href={link.href} 
-                    className={`${theme === 'light' ? 'text-gray-600 hover:text-gray-900' : 'text-gray-400 hover:text-white'} transition-colors duration-200 flex items-center`}
-                  >
-                    <span className="mr-2 text-xs">›</span>
-                    {link.name}
-                  </a>
-                </li>
-              ))}
+          <div className="text-left">
+            <h3 className="text-xl font-bold mb-4 text-slate-800 dark:text-white">{t('contactTitle')}</h3>
+            <div className="mb-4">
+              <h4 className="font-semibold text-slate-800 dark:text-white">{t('ourLocation')}</h4>
+              <p className="text-slate-600 dark:text-slate-400">Nava, Asturias, Spain</p>
+            </div>
+            <div className="mb-4">
+              <h4 className="font-semibold text-slate-800 dark:text-white">{t('emailUs')}</h4>
+              <p className="text-slate-600 dark:text-slate-400">info@algorito.net</p>
+            </div>
+            <Button 
+              className="flex items-center space-x-2 send-message-btn"
+              variant="default"
+            >
+              <Mail className="h-4 w-4" />
+              <span>{t('sendMessage')}</span>
+            </Button>
+          </div>
+          
+          <div className="text-left">
+            <h3 className="text-xl font-bold mb-4 text-slate-800 dark:text-white">{t('keyFeatures')}</h3>
+            <ul className="space-y-2 text-slate-600 dark:text-slate-400">
+              <li>- {t('workflowAutomation')}</li>
+              <li>- {t('websiteBuilding')}</li>
+              <li>- {t('chatbotIntegration')}</li>
+              <li>- {t('crmAutomation')}</li>
+              <li>- {t('dataSync')}</li>
             </ul>
           </div>
         </div>
         
-        {/* Footer Bottom */}
-        <div className={`pt-8 border-t ${theme === 'light' ? 'border-gray-200' : 'border-gray-800'} flex flex-col md:flex-row justify-between items-center`}>
-          <p className={theme === 'light' ? 'text-gray-600 mb-4 md:mb-0' : 'text-gray-500 mb-4 md:mb-0'}>
-            &copy; {currentYear} Algorito. {language === 'en' ? 'All rights reserved.' : 'Todos los derechos reservados.'}
+        <hr className="my-8 border-t border-slate-200 dark:border-slate-700" />
+        
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          <p className="text-slate-600 dark:text-slate-400 mb-4 md:mb-0">
+            &copy; {year} Algorito. {t('termsOfService')} | {t('privacyPolicy')}
           </p>
-          
-          <div className="flex space-x-6">
-            {legalLinks.map((link, index) => (
-              <a 
-                key={index} 
-                href={link.href} 
-                className={`${theme === 'light' ? 'text-gray-600 hover:text-gray-900' : 'text-gray-500 hover:text-white'} transition-colors duration-200`}
-              >
-                {link.name}
-              </a>
-            ))}
+          <div className="flex items-center space-x-4">
+            <LanguageToggle />
           </div>
         </div>
       </div>
