@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { X, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -15,12 +14,10 @@ const ChatWidget = () => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const { toast } = useToast();
 
-  // Scroll to bottom when messages change
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Focus input when chat is opened
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => {
@@ -36,17 +33,14 @@ const ChatWidget = () => {
   const sendMessage = async () => {
     if (!message.trim()) return;
     
-    // Add user message to chat
     const userMessage = { text: message, isUser: true };
     setMessages(prev => [...prev, userMessage]);
     
-    // Clear input
     setMessage('');
     
     setIsLoading(true);
 
     try {
-      // Send to webhook
       const response = await fetch('https://primary-production-778ad.up.railway.app/webhook/603f6d5d-d93f-466a-badf-35120315efc8', {
         method: 'POST',
         headers: {
@@ -66,10 +60,8 @@ const ChatWidget = () => {
         throw new Error('Failed to send message');
       }
 
-      // Parse the response and display it in the chat
       const responseData = await response.json();
       
-      // Add the bot's response to the chat
       setMessages(prev => [...prev, { 
         text: responseData.output || "Sorry, I couldn't process your request.", 
         isUser: false 
@@ -82,7 +74,6 @@ const ChatWidget = () => {
         variant: 'destructive',
       });
       
-      // Add an error message in the chat
       setMessages(prev => [...prev, { 
         text: "Sorry, there was an error processing your message. Please try again.", 
         isUser: false 
@@ -99,9 +90,7 @@ const ChatWidget = () => {
     }
   };
 
-  // Function to format message text with line breaks
   const formatMessageText = (text: string) => {
-    // Split the text by newline characters and join with <br> elements
     return text.split('\n').map((line, index) => (
       <React.Fragment key={index}>
         {line}
@@ -112,7 +101,6 @@ const ChatWidget = () => {
 
   return (
     <>
-      {/* Chat button */}
       <button 
         className="chat-widget-button"
         onClick={toggleChat}
@@ -125,10 +113,8 @@ const ChatWidget = () => {
         />
       </button>
 
-      {/* Chat window */}
       {isOpen && (
         <div className="chat-widget-container">
-          {/* Header */}
           <div className="chat-widget-header">
             <div className="chat-widget-header-info">
               <img 
@@ -137,7 +123,7 @@ const ChatWidget = () => {
                 className="chat-header-logo" 
               />
               <div>
-                <h3 className="chat-widget-title">algorito.net</h3>
+                <h3 className="chat-widget-title">Algorito Bot</h3>
                 <p className="chat-widget-subtitle">We typically respond right away</p>
               </div>
             </div>
@@ -150,7 +136,6 @@ const ChatWidget = () => {
             </button>
           </div>
 
-          {/* Messages */}
           <div className="chat-widget-messages">
             {messages.length === 0 && (
               <div className="chat-widget-welcome">
@@ -163,13 +148,17 @@ const ChatWidget = () => {
                 key={index} 
                 className={`chat-widget-message ${msg.isUser ? 'chat-widget-user-message' : 'chat-widget-bot-message'}`}
               >
-                {formatMessageText(msg.text)}
+                {msg.text.split('\n').map((line, i) => (
+                  <React.Fragment key={i}>
+                    {line}
+                    {i < msg.text.split('\n').length - 1 && <br />}
+                  </React.Fragment>
+                ))}
               </div>
             ))}
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input area */}
           <div className="chat-widget-input-container">
             <Textarea
               ref={inputRef}
