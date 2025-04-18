@@ -42,7 +42,7 @@ const Footer = () => {
             </div>
             <div className="mb-4">
               <h4 className="font-semibold text-slate-800 dark:text-white">{t('emailUs')}</h4>
-              <p className="text-slate-600 dark:text-slate-400">algorito@gmail.com</p>
+              <p className="text-slate-600 dark:text-slate-400">algoritoai@gmail.com</p>
             </div>
             <Button 
               className="flex items-center space-x-2"

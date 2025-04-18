@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/contexts/ThemeContext';
@@ -17,7 +16,6 @@ const About: React.FC = () => {
           <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mb-8`}>{t('aboutDesc')}</p>
         </div>
         
-        {/* Founder section */}
         <div className="max-w-5xl mx-auto mb-16">
           <Card className={`${theme === 'dark' ? 'bg-gray-800 border-gray-700' : 'bg-white'} overflow-hidden`}>
             <div className="grid md:grid-cols-2 gap-6">
