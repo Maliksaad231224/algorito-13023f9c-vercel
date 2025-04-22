@@ -50,7 +50,7 @@
 @media (max-width: 480px) {
   .chat-widget-container {
     width: 92%;
-    height: 80vh;
+    height: 60vh;
     right: 4%;
     left: 4%;
     bottom: 80px;
