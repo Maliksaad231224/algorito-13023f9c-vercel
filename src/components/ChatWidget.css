@@ -46,14 +46,43 @@
   animation: slideIn 0.3s ease-out;
 }
 
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  .chat-widget-container {
+    width: 92%;
+    height: 80vh;
+    right: 4%;
+    left: 4%;
+    bottom: 80px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .chat-widget-button {
+    right: 16px;
+    bottom: 16px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .chat-button-logo {
+    width: 30px;
+    height: 30px;
+  }
+
+  .chat-widget-header {
+    padding: 12px;
+  }
+
+  .chat-header-logo {
+    width: 28px;
+    height: 28px;
+  }
+
+  .chat-widget-title {
+    font-size: 16px;
+  }
+
+  .chat-widget-subtitle {
+    font-size: 12px;
   }
 }
 
