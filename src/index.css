@@ -176,13 +176,6 @@
   cursor: pointer !important;
   z-index: 999 !important;
   background-color: #00376f !important;
-  position: fixed !important;
-  bottom: 24px !important;
-  right: 24px !important;
-  width: 60px !important;
-  height: 60px !important;
-  border-radius: 50% !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
 }
 
 .chat-widget-container {
