@@ -6,33 +6,47 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { useState } from "react";
+import { Switch } from "@/components/ui/switch";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ChatWidget from "./components/ChatWidget";
 import "./App.css";
-import "./components/ChatWidget.css"; // Import the custom CSS for chat widget
+import "./components/ChatWidget.css";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider>
-      <LanguageProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-          <ChatWidget />
-        </TooltipProvider>
-      </LanguageProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  const [isChatWidgetEnabled, setIsChatWidgetEnabled] = useState(true);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <LanguageProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            {/* Chat Widget Toggle - Position it where you need */}
+            <div className="fixed top-4 right-4 flex items-center gap-2 z-[9999] bg-white dark:bg-gray-800 p-2 rounded-lg shadow-lg">
+              <span className="text-sm">Chat</span>
+              <Switch
+                checked={isChatWidgetEnabled}
+                onCheckedChange={setIsChatWidgetEnabled}
+                aria-label="Toggle chat widget"
+              />
+            </div>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+            {isChatWidgetEnabled && <ChatWidget />}
+          </TooltipProvider>
+        </LanguageProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
