@@ -19,7 +19,7 @@ export const toggleChatWidget = (enabled: boolean) => {
 };
 
 const App = () => {
-  const [isChatWidgetEnabled, setIsChatWidgetEnabled] = useState(false);
+  const [isChatWidgetEnabled, setIsChatWidgetEnabled] = useState(true);
 
   useState(() => {
     const handleToggle = (event: CustomEvent) => {
