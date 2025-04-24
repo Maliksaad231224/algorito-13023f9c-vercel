@@ -16,6 +16,7 @@ import "./components/ChatWidget.css";
 const queryClient = new QueryClient();
 
 const App = () => {
+  // By default, set to true. You can change this to false to disable the chat widget
   const [isChatWidgetEnabled, setIsChatWidgetEnabled] = useState(true);
 
   return (
