@@ -7,7 +7,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { useState } from "react";
-import { Switch } from "@/components/ui/switch";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ChatWidget from "./components/ChatWidget";
@@ -26,15 +25,6 @@ const App = () => {
           <TooltipProvider>
             <Toaster />
             <Sonner />
-            {/* Chat Widget Toggle - Position it where you need */}
-            <div className="fixed top-4 right-4 flex items-center gap-2 z-[9999] bg-white dark:bg-gray-800 p-2 rounded-lg shadow-lg">
-              <span className="text-sm">Chat</span>
-              <Switch
-                checked={isChatWidgetEnabled}
-                onCheckedChange={setIsChatWidgetEnabled}
-                aria-label="Toggle chat widget"
-              />
-            </div>
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Index />} />
