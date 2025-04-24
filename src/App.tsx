@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,9 +14,23 @@ import "./components/ChatWidget.css";
 
 const queryClient = new QueryClient();
 
+export const toggleChatWidget = (enabled: boolean) => {
+  window.dispatchEvent(new CustomEvent('toggleChatWidget', { detail: enabled }));
+};
+
 const App = () => {
-  // By default, set to true. You can change this to false to disable the chat widget
   const [isChatWidgetEnabled, setIsChatWidgetEnabled] = useState(true);
+
+  useState(() => {
+    const handleToggle = (event: CustomEvent) => {
+      setIsChatWidgetEnabled(event.detail);
+    };
+
+    window.addEventListener('toggleChatWidget', handleToggle as EventListener);
+    return () => {
+      window.removeEventListener('toggleChatWidget', handleToggle as EventListener);
+    };
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
