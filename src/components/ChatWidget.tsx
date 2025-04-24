@@ -41,7 +41,7 @@ const ChatWidget = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('https://primary-production-778ad.up.railway.app/webhook-test/603f6d5d-d93f-466a-badf-35120315efc8', {
+      const response = await fetch('https://primary-production-778ad.up.railway.app/webhook/603f6d5d-d93f-466a-badf-35120315efc8', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
