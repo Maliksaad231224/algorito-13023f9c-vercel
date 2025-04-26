@@ -9,7 +9,7 @@ import { useState } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ChatWidget from "./components/ChatWidget";
-import "./App.css";
+import "./index.css";
 import "./components/ChatWidget.css";
 
 const queryClient = new QueryClient();
